@@ -1,0 +1,3 @@
+[submodule "Carthage/Checkouts/Standards"]
+	path = Carthage/Checkouts/Standards
+	url = https://github.com/PersistX/Standards.git
