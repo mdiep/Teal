@@ -4,4 +4,7 @@
    <FileRef
       location = "group:Teal.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:TealSample.xcodeproj">
+   </FileRef>
 </Workspace>
