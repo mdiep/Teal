@@ -10,6 +10,9 @@
 		BE3FBE20217A01BC00D75284 /* Teal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3FBE16217A01BB00D75284 /* Teal.framework */; };
 		BE3FBE25217A01BC00D75284 /* TealTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3FBE24217A01BC00D75284 /* TealTests.swift */; };
 		BE3FBE27217A01BC00D75284 /* Teal.h in Headers */ = {isa = PBXBuildFile; fileRef = BE3FBE19217A01BB00D75284 /* Teal.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BE3FBE58217A0D7F00D75284 /* UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3FBE57217A0D7F00D75284 /* UI.swift */; };
+		BE3FBE5A217A0EF800D75284 /* UI.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3FBE59217A0EF800D75284 /* UI.View.swift */; };
+		BE55A2DB21A1F03B00C3E750 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE55A2DA21A1F03B00C3E750 /* View.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +32,9 @@
 		BE3FBE1F217A01BC00D75284 /* TealTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TealTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE3FBE24217A01BC00D75284 /* TealTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TealTests.swift; sourceTree = "<group>"; };
 		BE3FBE26217A01BC00D75284 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BE3FBE57217A0D7F00D75284 /* UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI.swift; sourceTree = "<group>"; };
+		BE3FBE59217A0EF800D75284 /* UI.View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI.View.swift; sourceTree = "<group>"; };
+		BE55A2DA21A1F03B00C3E750 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +77,9 @@
 		BE3FBE18217A01BB00D75284 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				BE55A2D921A1EF7300C3E750 /* UI */,
 				BE3FBE19217A01BB00D75284 /* Teal.h */,
+				BE55A2DA21A1F03B00C3E750 /* View.swift */,
 				BE3FBE1A217A01BB00D75284 /* Info.plist */,
 			);
 			path = Source;
@@ -84,6 +92,15 @@
 				BE3FBE26217A01BC00D75284 /* Info.plist */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		BE55A2D921A1EF7300C3E750 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				BE3FBE57217A0D7F00D75284 /* UI.swift */,
+				BE3FBE59217A0EF800D75284 /* UI.View.swift */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,6 +165,7 @@
 				TargetAttributes = {
 					BE3FBE15217A01BB00D75284 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1000;
 					};
 					BE3FBE1E217A01BC00D75284 = {
 						CreatedOnToolsVersion = 10.0;
@@ -194,6 +212,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE3FBE5A217A0EF800D75284 /* UI.View.swift in Sources */,
+				BE3FBE58217A0D7F00D75284 /* UI.swift in Sources */,
+				BE55A2DB21A1F03B00C3E750 /* View.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +362,7 @@
 		BE3FBE2B217A01BC00D75284 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -357,6 +379,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.diephouse.matt.Teal;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -365,6 +388,7 @@
 		BE3FBE2C217A01BC00D75284 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -389,6 +413,7 @@
 		BE3FBE2E217A01BC00D75284 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -406,6 +431,7 @@
 		BE3FBE2F217A01BC00D75284 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
