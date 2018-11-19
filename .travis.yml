@@ -1,0 +1,30 @@
+aliases:
+  - &xcode
+    language: objective-c
+    script: script/cibuild "$TRAVIS_XCODE_WORKSPACE" "$TRAVIS_XCODE_SCHEME" "build-for-testing test-without-building"
+    xcode_workspace: Teal.xcworkspace
+  - &xcode10
+    <<: *xcode
+    osx_image: xcode10
+  - &iOS
+    xcode_scheme: TealSample
+
+os: osx
+
+before_install:
+  - brew install swiftformat
+  - brew install swiftlint
+
+branches:
+  only:
+    - master
+
+matrix:
+  include:
+    - <<: *xcode10
+      <<: *iOS
+    - <<: *xcode10
+      script: ./Carthage/Checkouts/Standards/test
+
+notifications:
+  email: false
