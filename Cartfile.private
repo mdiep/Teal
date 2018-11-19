@@ -1,2 +1,2 @@
 github "PersistX/Standards" "master"
-github "pointfreeco/swift-snapshot-testing" ~> 0.0.1
+github "pointfreeco/swift-snapshot-testing" "master"

@@ -13,7 +13,7 @@
 		BE3FBE5A217A0EF800D75284 /* UI.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3FBE59217A0EF800D75284 /* UI.View.swift */; };
 		BE55A2DB21A1F03B00C3E750 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE55A2DA21A1F03B00C3E750 /* View.swift */; };
 		BE55A2E121A2F65800C3E750 /* ViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE55A2DF21A2F64400C3E750 /* ViewTests.swift */; };
-		BE55A2E421A36B0800C3E750 /* SnapshotTesting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE55A2E321A36B0800C3E750 /* SnapshotTesting.framework */; };
+		BE55A2E821A3793400C3E750 /* SnapshotTesting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE55A2E721A3793400C3E750 /* SnapshotTesting.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +36,7 @@
 		BE3FBE59217A0EF800D75284 /* UI.View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI.View.swift; sourceTree = "<group>"; };
 		BE55A2DA21A1F03B00C3E750 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		BE55A2DF21A2F64400C3E750 /* ViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTests.swift; sourceTree = "<group>"; };
-		BE55A2E321A36B0800C3E750 /* SnapshotTesting.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SnapshotTesting.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE55A2E721A3793400C3E750 /* SnapshotTesting.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SnapshotTesting.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE55A2E421A36B0800C3E750 /* SnapshotTesting.framework in Frameworks */,
+				BE55A2E821A3793400C3E750 /* SnapshotTesting.framework in Frameworks */,
 				BE3FBE20217A01BC00D75284 /* Teal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -110,7 +110,7 @@
 		BE55A2DC21A2F62D00C3E750 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BE55A2E321A36B0800C3E750 /* SnapshotTesting.framework */,
+				BE55A2E721A3793400C3E750 /* SnapshotTesting.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

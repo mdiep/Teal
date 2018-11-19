@@ -34,20 +34,6 @@
                ReferencedContainer = "container:TealSample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BE0A3A4C20289AD6005D0DD2"
-               BuildableName = "SnapshotTesting.framework"
-               BlueprintName = "SnapshotTesting (iOS)"
-               ReferencedContainer = "container:Carthage/Checkouts/swift-snapshot-testing/SnapshotTesting.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
