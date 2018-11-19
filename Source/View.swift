@@ -3,12 +3,14 @@ import UIKit
 /// A `UIView` that hosts a `Teal.UI`.
 public final class View<Message: Equatable>: UIView {
     public let ui: UI<Message>
+    private let view: UIView
 
     public init(_ ui: UI<Message>) {
         self.ui = ui
-        super.init(frame: .zero)
+        view = ui.view.makeUIView()
 
-        let view = makeUIView(for: ui.view)
+        super.init(frame: view.frame)
+
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         view.topAnchor.constraint(equalTo: topAnchor).isActive = true
@@ -20,36 +22,47 @@ public final class View<Message: Equatable>: UIView {
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    public override var intrinsicContentSize: CGSize {
+        return view.intrinsicContentSize
+    }
 }
 
-extension View {
-    fileprivate func makeUIView(for view: UI<Message>.View) -> UIView {
-        switch view {
+extension UI.View {
+    fileprivate func makeUIView() -> UIView {
+        switch self {
         case let .button(button):
-            return makeUIView(for: button)
+            return button.makeUIView()
         case let .label(label):
-            return makeUIView(for: label)
+            return label.makeUIView()
         case let .stack(stack):
-            return makeUIView(for: stack)
+            return stack.makeUIView()
         }
     }
+}
 
-    fileprivate func makeUIView(for button: UI<Message>.View.Button) -> UIView {
-        let view = UIButton()
-        view.setTitle(button.title, for: .normal)
-        return view
+extension UI.View.Button {
+    fileprivate func makeUIView() -> UIView {
+        let button = UIButton()
+        button.setTitle(title, for: .normal)
+        return button
     }
+}
 
-    fileprivate func makeUIView(for label: UI<Message>.View.Label) -> UIView {
-        let view = UILabel()
-        view.text = label.text
-        view.font = label.font
-        return view
+extension UI.View.Label {
+    fileprivate func makeUIView() -> UIView {
+        let label = UILabel()
+        label.text = text
+        label.font = font
+        label.sizeToFit()
+        return label
     }
+}
 
-    fileprivate func makeUIView(for stack: UI<Message>.View.Stack) -> UIView {
-        let view = UIStackView(arrangedSubviews: stack.views.map(makeUIView))
-        view.axis = stack.axis == .vertical ? .vertical : .horizontal
-        return view
+extension UI.View.Stack {
+    fileprivate func makeUIView() -> UIView {
+        let stack = UIStackView(arrangedSubviews: views.map { $0.makeUIView() })
+        stack.axis = axis == .vertical ? .vertical : .horizontal
+        return stack
     }
 }

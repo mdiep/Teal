@@ -1,3 +1,6 @@
 [submodule "Carthage/Checkouts/Standards"]
 	path = Carthage/Checkouts/Standards
 	url = https://github.com/PersistX/Standards.git
+[submodule "Carthage/Checkouts/swift-snapshot-testing"]
+	path = Carthage/Checkouts/swift-snapshot-testing
+	url = https://github.com/pointfreeco/swift-snapshot-testing.git
