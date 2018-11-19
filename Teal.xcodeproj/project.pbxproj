@@ -13,6 +13,8 @@
 		BE3FBE58217A0D7F00D75284 /* UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3FBE57217A0D7F00D75284 /* UI.swift */; };
 		BE3FBE5A217A0EF800D75284 /* UI.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3FBE59217A0EF800D75284 /* UI.View.swift */; };
 		BE55A2DB21A1F03B00C3E750 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE55A2DA21A1F03B00C3E750 /* View.swift */; };
+		BE55A2DE21A2F62D00C3E750 /* SnapshotTesting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE55A2DD21A2F62D00C3E750 /* SnapshotTesting.framework */; };
+		BE55A2E121A2F65800C3E750 /* ViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE55A2DF21A2F64400C3E750 /* ViewTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +37,8 @@
 		BE3FBE57217A0D7F00D75284 /* UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI.swift; sourceTree = "<group>"; };
 		BE3FBE59217A0EF800D75284 /* UI.View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI.View.swift; sourceTree = "<group>"; };
 		BE55A2DA21A1F03B00C3E750 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		BE55A2DD21A2F62D00C3E750 /* SnapshotTesting.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SnapshotTesting.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE55A2DF21A2F64400C3E750 /* ViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE55A2DE21A2F62D00C3E750 /* SnapshotTesting.framework in Frameworks */,
 				BE3FBE20217A01BC00D75284 /* Teal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -62,6 +67,7 @@
 				BE3FBE18217A01BB00D75284 /* Source */,
 				BE3FBE23217A01BC00D75284 /* Tests */,
 				BE3FBE17217A01BB00D75284 /* Products */,
+				BE55A2DC21A2F62D00C3E750 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -90,6 +96,7 @@
 			children = (
 				BE3FBE24217A01BC00D75284 /* TealTests.swift */,
 				BE3FBE26217A01BC00D75284 /* Info.plist */,
+				BE55A2DF21A2F64400C3E750 /* ViewTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -101,6 +108,14 @@
 				BE3FBE59217A0EF800D75284 /* UI.View.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		BE55A2DC21A2F62D00C3E750 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BE55A2DD21A2F62D00C3E750 /* SnapshotTesting.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -222,6 +237,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE55A2E121A2F65800C3E750 /* ViewTests.swift in Sources */,
 				BE3FBE25217A01BC00D75284 /* TealTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
