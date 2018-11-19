@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		BE3FBE20217A01BC00D75284 /* Teal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3FBE16217A01BB00D75284 /* Teal.framework */; };
-		BE3FBE25217A01BC00D75284 /* TealTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3FBE24217A01BC00D75284 /* TealTests.swift */; };
 		BE3FBE27217A01BC00D75284 /* Teal.h in Headers */ = {isa = PBXBuildFile; fileRef = BE3FBE19217A01BB00D75284 /* Teal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BE3FBE58217A0D7F00D75284 /* UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3FBE57217A0D7F00D75284 /* UI.swift */; };
 		BE3FBE5A217A0EF800D75284 /* UI.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3FBE59217A0EF800D75284 /* UI.View.swift */; };
@@ -32,7 +31,6 @@
 		BE3FBE19217A01BB00D75284 /* Teal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Teal.h; sourceTree = "<group>"; };
 		BE3FBE1A217A01BB00D75284 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE3FBE1F217A01BC00D75284 /* TealTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TealTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		BE3FBE24217A01BC00D75284 /* TealTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TealTests.swift; sourceTree = "<group>"; };
 		BE3FBE26217A01BC00D75284 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE3FBE57217A0D7F00D75284 /* UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI.swift; sourceTree = "<group>"; };
 		BE3FBE59217A0EF800D75284 /* UI.View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI.View.swift; sourceTree = "<group>"; };
@@ -94,7 +92,6 @@
 		BE3FBE23217A01BC00D75284 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				BE3FBE24217A01BC00D75284 /* TealTests.swift */,
 				BE3FBE26217A01BC00D75284 /* Info.plist */,
 				BE55A2DF21A2F64400C3E750 /* ViewTests.swift */,
 			);
@@ -238,7 +235,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE55A2E121A2F65800C3E750 /* ViewTests.swift in Sources */,
-				BE3FBE25217A01BC00D75284 /* TealTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
