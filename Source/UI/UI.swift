@@ -19,8 +19,12 @@ extension UI {
 }
 
 extension UI {
-    public static func label(text: String, font: UIFont? = nil) -> UI {
-        return UI(.label(text: text, font: font))
+    public static func label(
+        text: String,
+        textColor: UIColor? = nil,
+        font: UIFont? = nil
+    ) -> UI {
+        return UI(.label(text: text, textColor: textColor, font: font))
     }
 }
 

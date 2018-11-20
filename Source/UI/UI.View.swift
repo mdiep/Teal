@@ -21,11 +21,12 @@ extension UI.View {
 extension UI.View {
     struct Label: Equatable {
         let text: String
+        let textColor: UIColor?
         let font: UIFont?
     }
 
-    static func label(text: String, font: UIFont?) -> UI.View {
-        return .label(Label(text: text, font: font))
+    static func label(text: String, textColor: UIColor?, font: UIFont?) -> UI.View {
+        return .label(Label(text: text, textColor: textColor, font: font))
     }
 }
 
