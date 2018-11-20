@@ -63,6 +63,7 @@
 				BE3FBE3A217A080D00D75284 /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		BE3FBE3A217A080D00D75284 /* Products */ = {
 			isa = PBXGroup;
