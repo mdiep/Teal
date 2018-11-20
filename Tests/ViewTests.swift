@@ -24,6 +24,10 @@ final class ViewSnapshotTests: XCTestCase {
         snapshot(.label(text: "Label"))
     }
 
+    func testLabelTextColor() {
+        snapshot(.label(text: "Label", textColor: .red))
+    }
+
     func testLabelFont() {
         snapshot(.label(text: "Label", font: .boldSystemFont(ofSize: 20)))
     }
