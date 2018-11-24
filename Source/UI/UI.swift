@@ -19,6 +19,20 @@ extension UI {
 }
 
 extension UI {
+    public static func custom(
+        _ a: UI,
+        _ constraints: (ID, ID) -> Set<Constraint>
+    ) -> UI {
+        return UI(
+            .custom(
+                views: [a.view],
+                constraints: constraints(ID(0), ID(1))
+            )
+        )
+    }
+}
+
+extension UI {
     public static func label(
         text: String,
         textColor: UIColor? = nil,
