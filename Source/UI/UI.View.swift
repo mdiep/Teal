@@ -2,6 +2,7 @@ extension UI {
     /// An internal representation of a `UI`'s view.
     internal enum View: Equatable {
         case button(Button)
+        case custom(Custom)
         case label(Label)
         case stack(Stack)
     }
@@ -15,6 +16,17 @@ extension UI.View {
 
     static func button(title: String, action: Message) -> UI.View {
         return .button(Button(title: title, action: action))
+    }
+}
+
+extension UI.View {
+    struct Custom: Equatable {
+        let views: [UI.View]
+        let constraints: Set<Constraint>
+    }
+
+    static func custom(views: [UI.View], constraints: Set<Constraint>) -> UI.View {
+        return .custom(Custom(views: views, constraints: constraints))
     }
 }
 

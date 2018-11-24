@@ -33,6 +33,8 @@ extension UI.View {
         switch self {
         case let .button(button):
             return button.makeUIView()
+        case let .custom(custom):
+            return custom.makeUIView()
         case let .label(label):
             return label.makeUIView()
         case let .stack(stack):
@@ -45,7 +47,32 @@ extension UI.View.Button {
     fileprivate func makeUIView() -> UIView {
         let button = UIButton()
         button.setTitle(title, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
+    }
+}
+
+extension UI.View.Custom {
+    fileprivate func makeUIView() -> UIView {
+        let view = UIView()
+
+        let subviews = views.map { $0.makeUIView() }
+        subviews.forEach(view.addSubview)
+
+        let allViews = [view] + subviews
+        for constraint in constraints {
+            NSLayoutConstraint(
+                item: allViews[constraint.first.id.value],
+                attribute: constraint.first.attribute,
+                relatedBy: constraint.relation,
+                toItem: constraint.second.map { allViews[$0.id.value] },
+                attribute: constraint.second.map { $0.attribute } ?? .notAnAttribute,
+                multiplier: 1,
+                constant: CGFloat(constraint.constant)
+            ).isActive = true
+        }
+
+        return view
     }
 }
 
@@ -56,6 +83,7 @@ extension UI.View.Label {
         label.textColor = textColor
         label.font = font
         label.sizeToFit()
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }
 }
@@ -64,6 +92,7 @@ extension UI.View.Stack {
     fileprivate func makeUIView() -> UIView {
         let stack = UIStackView(arrangedSubviews: views.map { $0.makeUIView() })
         stack.axis = axis == .vertical ? .vertical : .horizontal
+        stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }
 }

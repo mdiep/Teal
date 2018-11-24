@@ -20,6 +20,19 @@ final class ViewSnapshotTests: XCTestCase {
         snapshot(.button(title: "Button", action: Message()))
     }
 
+    func testCustomHeightWidthCenter() {
+        snapshot(
+            .custom(.label(text: "Label")) { view, label -> Set<Constraint> in
+                [
+                    view.width == 200,
+                    view.height == 50,
+                    label.centerX == view.centerX,
+                    label.centerY == view.centerY,
+                ]
+            }
+        )
+    }
+
     func testLabel() {
         snapshot(.label(text: "Label"))
     }
