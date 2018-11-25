@@ -2,21 +2,32 @@ import UIKit
 
 /// A `UIView` that hosts a `Teal.UI`.
 public final class View<Message: Equatable>: UIView {
-    public let ui: UI<Message>
-    private let view: UIView
+    public var ui: UI<Message> {
+        didSet {
+            view = ui.view.makeUIView()
+        }
+    }
+
+    private var view: UIView {
+        willSet {
+            view.removeFromSuperview()
+        }
+        didSet {
+            view.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(view)
+            view.topAnchor.constraint(equalTo: topAnchor).isActive = true
+            view.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+            view.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+            view.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        }
+    }
 
     public init(_ ui: UI<Message>) {
         self.ui = ui
-        view = ui.view.makeUIView()
+        view = UIView()
+        defer { self.view = ui.view.makeUIView() }
 
         super.init(frame: view.frame)
-
-        view.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(view)
-        view.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        view.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        view.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        view.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     }
 
     required init?(coder _: NSCoder) {
@@ -30,16 +41,19 @@ public final class View<Message: Equatable>: UIView {
 
 extension UI.View {
     fileprivate func makeUIView() -> UIView {
+        let view: UIView
         switch self {
         case let .button(button):
-            return button.makeUIView()
+            view = button.makeUIView()
         case let .custom(custom):
-            return custom.makeUIView()
+            view = custom.makeUIView()
         case let .label(label):
-            return label.makeUIView()
+            view = label.makeUIView()
         case let .stack(stack):
-            return stack.makeUIView()
+            view = stack.makeUIView()
         }
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }
 }
 
@@ -47,7 +61,6 @@ extension UI.View.Button {
     fileprivate func makeUIView() -> UIView {
         let button = UIButton()
         button.setTitle(title, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }
 }
@@ -83,7 +96,6 @@ extension UI.View.Label {
         label.textColor = textColor
         label.font = font
         label.sizeToFit()
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }
 }
@@ -92,7 +104,6 @@ extension UI.View.Stack {
     fileprivate func makeUIView() -> UIView {
         let stack = UIStackView(arrangedSubviews: views.map { $0.makeUIView() })
         stack.axis = axis == .vertical ? .vertical : .horizontal
-        stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }
 }
