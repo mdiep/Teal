@@ -86,10 +86,13 @@
 		BE3FBE18217A01BB00D75284 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				BE55A2D921A1EF7300C3E750 /* UI */,
-				BE3FBE19217A01BB00D75284 /* Teal.h */,
-				BE55A2DA21A1F03B00C3E750 /* View.swift */,
+				BE9A3AE721A7811B001D7872 /* Constraint.swift */,
+				BE9A3AE921A7816F001D7872 /* ID.swift */,
 				BE3FBE1A217A01BB00D75284 /* Info.plist */,
+				BE3FBE19217A01BB00D75284 /* Teal.h */,
+				BE3FBE57217A0D7F00D75284 /* UI.swift */,
+				BE3FBE59217A0EF800D75284 /* UI.View.swift */,
+				BE55A2DA21A1F03B00C3E750 /* View.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -101,17 +104,6 @@
 				BE55A2DF21A2F64400C3E750 /* ViewTests.swift */,
 			);
 			path = Tests;
-			sourceTree = "<group>";
-		};
-		BE55A2D921A1EF7300C3E750 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				BE9A3AE721A7811B001D7872 /* Constraint.swift */,
-				BE9A3AE921A7816F001D7872 /* ID.swift */,
-				BE3FBE57217A0D7F00D75284 /* UI.swift */,
-				BE3FBE59217A0EF800D75284 /* UI.View.swift */,
-			);
-			path = UI;
 			sourceTree = "<group>";
 		};
 		BE55A2DC21A2F62D00C3E750 /* Frameworks */ = {
