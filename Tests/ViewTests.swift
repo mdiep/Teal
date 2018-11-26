@@ -2,6 +2,8 @@ import SnapshotTesting
 import Teal
 import XCTest
 
+// swiftlint:disable force_cast
+
 private struct Message: Equatable {}
 
 final class ViewPerformTests: XCTestCase {
