@@ -13,7 +13,9 @@ final class ViewController: UIViewController {
             axis: .vertical
         )
 
-        let view = Teal.View(ui)
+        let view = Teal.View(ui) { message in
+            print(message)
+        }
         view.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(view)
         let guide = self.view.safeAreaLayoutGuide

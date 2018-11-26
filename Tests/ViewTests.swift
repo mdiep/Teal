@@ -2,7 +2,20 @@ import SnapshotTesting
 import Teal
 import XCTest
 
+// swiftlint:disable force_cast
+
 private struct Message: Equatable {}
+
+final class ViewPerformTests: XCTestCase {
+    func testButton() {
+        var message: Message?
+        let ui = UI<Message>.button(title: "", action: Message())
+        let view = View(ui) { message = $0 }
+        let button = view.subviews[0] as! UIButton
+        button.sendActions(for: .touchUpInside)
+        XCTAssertNotNil(message)
+    }
+}
 
 final class ViewSnapshotTests: XCTestCase {
     fileprivate func snapshot(

@@ -4,9 +4,13 @@ import UIKit
 public final class View<Message: Equatable>: UIView {
     public var ui: UI<Message> {
         didSet {
-            view = ui.view.makeUIView()
+            view = ui.view.makeUIView { [weak self] message in
+                self?.perform(message)
+            }
         }
     }
+
+    public var perform: (Message) -> Void
 
     private var view: UIView {
         willSet {
@@ -22,10 +26,14 @@ public final class View<Message: Equatable>: UIView {
         }
     }
 
-    public init(_ ui: UI<Message>) {
+    public init(
+        _ ui: UI<Message>,
+        perform: @escaping (Message) -> Void = { _ in }
+    ) {
+        defer { self.ui = ui }
         self.ui = ui
+        self.perform = perform
         view = UIView()
-        defer { self.view = ui.view.makeUIView() }
 
         super.init(frame: view.frame)
     }
@@ -40,17 +48,19 @@ public final class View<Message: Equatable>: UIView {
 }
 
 extension UI.View {
-    fileprivate func makeUIView() -> UIView {
+    fileprivate func makeUIView(
+        _ perform: @escaping (Message) -> Void
+    ) -> UIView {
         let view: UIView
         switch self {
         case let .button(button):
-            view = button.makeUIView()
+            view = button.makeUIView(perform)
         case let .custom(custom):
-            view = custom.makeUIView()
+            view = custom.makeUIView(perform)
         case let .label(label):
             view = label.makeUIView()
         case let .stack(stack):
-            view = stack.makeUIView()
+            view = stack.makeUIView(perform)
         }
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -58,18 +68,23 @@ extension UI.View {
 }
 
 extension UI.View.Button {
-    fileprivate func makeUIView() -> UIView {
+    fileprivate func makeUIView(
+        _ perform: @escaping (Message) -> Void
+    ) -> UIView {
         let button = UIButton()
         button.setTitle(title, for: .normal)
+        button.touchUpInside = { [action = self.action] in perform(action) }
         return button
     }
 }
 
 extension UI.View.Custom {
-    fileprivate func makeUIView() -> UIView {
+    fileprivate func makeUIView(
+        _ perform: @escaping (Message) -> Void
+    ) -> UIView {
         let view = UIView()
 
-        let subviews = views.map { $0.makeUIView() }
+        let subviews = views.map { $0.makeUIView(perform) }
         subviews.forEach(view.addSubview)
 
         let allViews = [view] + subviews
@@ -101,8 +116,11 @@ extension UI.View.Label {
 }
 
 extension UI.View.Stack {
-    fileprivate func makeUIView() -> UIView {
-        let stack = UIStackView(arrangedSubviews: views.map { $0.makeUIView() })
+    fileprivate func makeUIView(
+        _ perform: @escaping (Message) -> Void
+    ) -> UIView {
+        let views = self.views.map { $0.makeUIView(perform) }
+        let stack = UIStackView(arrangedSubviews: views)
         stack.axis = axis == .vertical ? .vertical : .horizontal
         return stack
     }
