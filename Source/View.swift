@@ -9,7 +9,7 @@ public final class View<Message: Equatable>: UIView {
             }
         }
     }
-    
+
     public var perform: (Message) -> Void
 
     private var view: UIView {
