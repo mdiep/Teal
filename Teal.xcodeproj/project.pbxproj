@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE2D0F9221AB7876004D56A1 /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2D0F9121AB7876004D56A1 /* Target.swift */; };
+		BE2D0F9421AB9AC0004D56A1 /* TargetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2D0F9321AB9AC0004D56A1 /* TargetTests.swift */; };
 		BE2D0F9C21AC2108004D56A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2D0F9B21AC2108004D56A1 /* AppDelegate.swift */; };
 		BE2D0FA621AC210D004D56A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE2D0FA421AC210D004D56A1 /* LaunchScreen.storyboard */; };
 		BE3FBE20217A01BC00D75284 /* Teal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3FBE16217A01BB00D75284 /* Teal.framework */; };
@@ -38,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BE2D0F9121AB7876004D56A1 /* Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
+		BE2D0F9321AB9AC0004D56A1 /* TargetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetTests.swift; sourceTree = "<group>"; };
 		BE2D0F9921AC2107004D56A1 /* TestHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE2D0F9B21AC2108004D56A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BE2D0FA521AC210D004D56A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -121,6 +125,7 @@
 				BE9A3AE721A7811B001D7872 /* Constraint.swift */,
 				BE9A3AE921A7816F001D7872 /* ID.swift */,
 				BE3FBE1A217A01BB00D75284 /* Info.plist */,
+				BE2D0F9121AB7876004D56A1 /* Target.swift */,
 				BE3FBE19217A01BB00D75284 /* Teal.h */,
 				BE3FBE57217A0D7F00D75284 /* UI.swift */,
 				BE3FBE59217A0EF800D75284 /* UI.View.swift */,
@@ -133,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				BE3FBE26217A01BC00D75284 /* Info.plist */,
+				BE2D0F9321AB9AC0004D56A1 /* TargetTests.swift */,
 				BE55A2DF21A2F64400C3E750 /* ViewTests.swift */,
 			);
 			path = Tests;
@@ -294,6 +300,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE2D0F9221AB7876004D56A1 /* Target.swift in Sources */,
 				BE9A3AE821A7811B001D7872 /* Constraint.swift in Sources */,
 				BE3FBE5A217A0EF800D75284 /* UI.View.swift in Sources */,
 				BE3FBE58217A0D7F00D75284 /* UI.swift in Sources */,
@@ -306,6 +313,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE2D0F9421AB9AC0004D56A1 /* TargetTests.swift in Sources */,
 				BE55A2E121A2F65800C3E750 /* ViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
