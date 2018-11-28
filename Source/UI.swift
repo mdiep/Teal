@@ -27,6 +27,7 @@ extension UI {
 
 extension UI {
     public static func custom(
+        accessibilityIdentifier: String? = nil,
         backgroundColor: UIColor? = nil,
         _ a: UI,
         _ constraints: (ID, ID) -> Set<Constraint>
@@ -34,6 +35,7 @@ extension UI {
         return UI(
             .custom(
                 .init(
+                    accessibilityIdentifier: accessibilityIdentifier,
                     backgroundColor: backgroundColor,
                     constraints: constraints(ID(0), ID(1)),
                     views: [a.view]

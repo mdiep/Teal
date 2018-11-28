@@ -17,8 +17,24 @@ final class ViewPerformTests: XCTestCase {
     }
 }
 
+final class ViewPropertyTests: XCTestCase {
+    private func makeView<View: UIView>(_ ui: UI<Message>) -> View {
+        return Teal.View(ui).subviews[0] as! View
+    }
+
+    func testCustomAccessibilityIdentifier() {
+        let view: UIView = makeView(
+            .custom(
+                accessibilityIdentifier: "Help",
+                .label(text: "Foo")
+            ) { _, _ in [] }
+        )
+        XCTAssertEqual(view.accessibilityIdentifier, "Help")
+    }
+}
+
 final class ViewSnapshotTests: XCTestCase {
-    fileprivate func snapshot(
+    private func snapshot(
         file: StaticString = #file,
         function: String = #function,
         line: UInt = #line,
