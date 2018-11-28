@@ -44,6 +44,7 @@ extension UI {
 extension UI {
     public static func label(
         text: String,
+        textAlignment: NSTextAlignment = .natural,
         textColor: UIColor? = nil,
         font: UIFont? = nil
     ) -> UI {
@@ -51,6 +52,7 @@ extension UI {
             .label(
                 .init(
                     text: text,
+                    textAlignment: textAlignment,
                     textColor: textColor,
                     font: font
                 )

@@ -108,6 +108,7 @@ extension UI.View.Label {
     fileprivate func makeUIView() -> UIView {
         let label = UILabel()
         label.text = text
+        label.textAlignment = textAlignment
         label.textColor = textColor
         label.font = font
         label.sizeToFit()

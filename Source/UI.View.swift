@@ -25,6 +25,7 @@ extension UI.View {
 extension UI.View {
     struct Label: Equatable {
         let text: String
+        let textAlignment: NSTextAlignment
         let textColor: UIColor?
         let font: UIFont?
     }

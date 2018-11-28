@@ -23,11 +23,20 @@ final class ViewSnapshotTests: XCTestCase {
         function: String = #function,
         line: UInt = #line,
         _ ui: UI<Message>,
-        _ rest: UI<Message>...
+        _ rest: UI<Message>...,
+        width: CGFloat? = nil
     ) {
         let view = View(ui)
+        if let width = width {
+            view.widthAnchor
+                .constraint(equalToConstant: width)
+                .isActive = true
+        }
+
         rest.forEach { view.ui = $0 }
+
         view.frame.size = view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+
         assertSnapshot(matching: view, file: file, function: function, line: line)
     }
 
@@ -63,6 +72,13 @@ final class ViewSnapshotTests: XCTestCase {
         snapshot(
             .label(text: "Foo"),
             .label(text: "Label")
+        )
+    }
+
+    func testLabelTextAlignment() {
+        snapshot(
+            .label(text: "Label", textAlignment: .center),
+            width: 200
         )
     }
 
