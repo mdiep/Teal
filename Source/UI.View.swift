@@ -13,20 +13,12 @@ extension UI.View {
         let title: String
         let action: Message
     }
-
-    static func button(title: String, action: Message) -> UI.View {
-        return .button(Button(title: title, action: action))
-    }
 }
 
 extension UI.View {
     struct Custom: Equatable {
         let views: [UI.View]
         let constraints: Set<Constraint>
-    }
-
-    static func custom(views: [UI.View], constraints: Set<Constraint>) -> UI.View {
-        return .custom(Custom(views: views, constraints: constraints))
     }
 }
 
@@ -36,19 +28,11 @@ extension UI.View {
         let textColor: UIColor?
         let font: UIFont?
     }
-
-    static func label(text: String, textColor: UIColor?, font: UIFont?) -> UI.View {
-        return .label(Label(text: text, textColor: textColor, font: font))
-    }
 }
 
 extension UI.View {
     struct Stack: Equatable {
         let views: [UI.View]
         let axis: Axis
-    }
-
-    static func stack(views: [UI.View], axis: Axis) -> UI.View {
-        return .stack(Stack(views: views, axis: axis))
     }
 }
