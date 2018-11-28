@@ -24,6 +24,7 @@ extension UI.View {
 
 extension UI.View {
     struct Label: Equatable {
+        let numberOfLines: Int
         let text: String
         let textAlignment: NSTextAlignment
         let textColor: UIColor?

@@ -43,6 +43,7 @@ extension UI {
 
 extension UI {
     public static func label(
+        numberOfLines: Int = 1,
         text: String,
         textAlignment: NSTextAlignment = .natural,
         textColor: UIColor? = nil,
@@ -51,6 +52,7 @@ extension UI {
         return UI(
             .label(
                 .init(
+                    numberOfLines: numberOfLines,
                     text: text,
                     textAlignment: textAlignment,
                     textColor: textColor,

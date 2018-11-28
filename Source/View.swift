@@ -107,6 +107,7 @@ extension UI.View.Custom {
 extension UI.View.Label {
     fileprivate func makeUIView() -> UIView {
         let label = UILabel()
+        label.numberOfLines = numberOfLines
         label.text = text
         label.textAlignment = textAlignment
         label.textColor = textColor

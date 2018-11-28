@@ -68,6 +68,13 @@ final class ViewSnapshotTests: XCTestCase {
         snapshot(.label(text: "Label"))
     }
 
+    func testLabelNumberOfLines() {
+        snapshot(
+            .label(numberOfLines: 0, text: "Foo Bar Baz"),
+            width: 40
+        )
+    }
+
     func testLabelChangeText() {
         snapshot(
             .label(text: "Foo"),
