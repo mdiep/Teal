@@ -51,6 +51,22 @@ final class ViewSnapshotTests: XCTestCase {
         )
     }
 
+    func testCustomBackgroundColor() {
+        snapshot(
+            .custom(
+                backgroundColor: .lightGray,
+                .label(text: "Label")
+            ) { view, label -> Set<Constraint> in
+                [
+                    view.width == 200,
+                    view.height == 50,
+                    label.centerX == view.centerX,
+                    label.centerY == view.centerY,
+                ]
+            }
+        )
+    }
+
     func testCustomHeightWidthCenter() {
         snapshot(
             .custom(.label(text: "Label")) { view, label -> Set<Constraint> in

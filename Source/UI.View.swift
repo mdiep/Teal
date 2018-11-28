@@ -18,8 +18,9 @@ extension UI.View {
 
 extension UI.View {
     struct Custom: Equatable {
-        let views: [UI.View]
+        let backgroundColor: UIColor?
         let constraints: Set<Constraint>
+        let views: [UI.View]
     }
 }
 
