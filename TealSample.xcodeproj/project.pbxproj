@@ -10,8 +10,8 @@
 		BE3FBE3D217A080D00D75284 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3FBE3C217A080D00D75284 /* AppDelegate.swift */; };
 		BE3FBE44217A080E00D75284 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE3FBE43217A080E00D75284 /* Assets.xcassets */; };
 		BE3FBE47217A080E00D75284 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE3FBE45217A080E00D75284 /* LaunchScreen.storyboard */; };
-		BE3FBE53217A085200D75284 /* Teal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3FBE52217A085200D75284 /* Teal.framework */; };
-		BE3FBE54217A085200D75284 /* Teal.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BE3FBE52217A085200D75284 /* Teal.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BE9A3AF421AED46B001D7872 /* Teal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE9A3AF321AED46B001D7872 /* Teal.framework */; };
+		BE9A3AF521AED46F001D7872 /* Teal.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BE9A3AF321AED46B001D7872 /* Teal.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -21,7 +21,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				BE3FBE54217A085200D75284 /* Teal.framework in Embed Frameworks */,
+				BE9A3AF521AED46F001D7872 /* Teal.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -34,8 +34,7 @@
 		BE3FBE43217A080E00D75284 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BE3FBE46217A080E00D75284 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BE3FBE48217A080E00D75284 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BE3FBE52217A085200D75284 /* Teal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Teal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BE3FBE56217A085E00D75284 /* Teal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Teal.framework; path = "../../../Library/Developer/Xcode/DerivedData/Teal-ciifccfclamyvjfixmusamoxujbv/Build/Products/Debug-iphoneos/Teal.framework"; sourceTree = "<group>"; };
+		BE9A3AF321AED46B001D7872 /* Teal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Teal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,7 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE3FBE53217A085200D75284 /* Teal.framework in Frameworks */,
+				BE9A3AF421AED46B001D7872 /* Teal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,7 +52,6 @@
 		BE3FBE30217A080D00D75284 = {
 			isa = PBXGroup;
 			children = (
-				BE3FBE52217A085200D75284 /* Teal.framework */,
 				BE3FBE3B217A080D00D75284 /* TealSample */,
 				BE3FBE55217A085700D75284 /* Frameworks */,
 				BE3FBE3A217A080D00D75284 /* Products */,
@@ -83,7 +81,7 @@
 		BE3FBE55217A085700D75284 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BE3FBE56217A085E00D75284 /* Teal.framework */,
+				BE9A3AF321AED46B001D7872 /* Teal.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
