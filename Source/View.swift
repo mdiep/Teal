@@ -57,6 +57,8 @@ extension UI.View {
             view = button.makeUIView(perform)
         case let .custom(custom):
             view = custom.makeUIView(perform)
+        case let .image(image):
+            view = image.makeUIView()
         case let .label(label):
             view = label.makeUIView()
         case let .stack(stack):
@@ -100,6 +102,14 @@ extension UI.View.Custom {
             ).isActive = true
         }
 
+        return view
+    }
+}
+
+extension UI.View.Image {
+    fileprivate func makeUIView() -> UIView {
+        let view = UIImageView()
+        view.image = image
         return view
     }
 }

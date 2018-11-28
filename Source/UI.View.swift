@@ -3,6 +3,7 @@ extension UI {
     internal enum View: Equatable {
         case button(Button)
         case custom(Custom)
+        case image(Image)
         case label(Label)
         case stack(Stack)
     }
@@ -19,6 +20,12 @@ extension UI.View {
     struct Custom: Equatable {
         let views: [UI.View]
         let constraints: Set<Constraint>
+    }
+}
+
+extension UI.View {
+    struct Image: Equatable {
+        let image: UIImage
     }
 }
 

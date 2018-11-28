@@ -42,6 +42,20 @@ extension UI {
 }
 
 extension UI {
+    public static func image(
+        _ image: UIImage
+    ) -> UI {
+        return UI(
+            .image(
+                .init(
+                    image: image
+                )
+            )
+        )
+    }
+}
+
+extension UI {
     public static func label(
         numberOfLines: Int = 1,
         text: String,

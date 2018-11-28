@@ -64,6 +64,11 @@ final class ViewSnapshotTests: XCTestCase {
         )
     }
 
+    func testImage() {
+        let image = UIImage(named: "elm-lang")!
+        snapshot(.image(image))
+    }
+
     func testLabel() {
         snapshot(.label(text: "Label"))
     }
