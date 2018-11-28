@@ -27,14 +27,16 @@ extension UI {
 
 extension UI {
     public static func custom(
+        backgroundColor: UIColor? = nil,
         _ a: UI,
         _ constraints: (ID, ID) -> Set<Constraint>
     ) -> UI {
         return UI(
             .custom(
                 .init(
-                    views: [a.view],
-                    constraints: constraints(ID(0), ID(1))
+                    backgroundColor: backgroundColor,
+                    constraints: constraints(ID(0), ID(1)),
+                    views: [a.view]
                 )
             )
         )

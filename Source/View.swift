@@ -85,6 +85,7 @@ extension UI.View.Custom {
         _ perform: @escaping (Message) -> Void
     ) -> UIView {
         let view = UIView()
+        view.backgroundColor = backgroundColor
 
         let subviews = views.map { $0.makeUIView(perform) }
         subviews.forEach(view.addSubview)
