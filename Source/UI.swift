@@ -14,7 +14,14 @@ public enum Axis: Equatable {
 
 extension UI {
     public static func button(title: String, action: Message) -> UI {
-        return UI(.button(title: title, action: action))
+        return UI(
+            .button(
+                .init(
+                    title: title,
+                    action: action
+                )
+            )
+        )
     }
 }
 
@@ -25,8 +32,10 @@ extension UI {
     ) -> UI {
         return UI(
             .custom(
-                views: [a.view],
-                constraints: constraints(ID(0), ID(1))
+                .init(
+                    views: [a.view],
+                    constraints: constraints(ID(0), ID(1))
+                )
             )
         )
     }
@@ -38,12 +47,27 @@ extension UI {
         textColor: UIColor? = nil,
         font: UIFont? = nil
     ) -> UI {
-        return UI(.label(text: text, textColor: textColor, font: font))
+        return UI(
+            .label(
+                .init(
+                    text: text,
+                    textColor: textColor,
+                    font: font
+                )
+            )
+        )
     }
 }
 
 extension UI {
     public static func stack(_ elements: [UI], axis: Axis) -> UI {
-        return UI(.stack(views: elements.map { $0.view }, axis: axis))
+        return UI(
+            .stack(
+                .init(
+                    views: elements.map { $0.view },
+                    axis: axis
+                )
+            )
+        )
     }
 }
