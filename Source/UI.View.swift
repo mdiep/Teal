@@ -33,6 +33,7 @@ extension UI.View {
 
 extension UI.View {
     struct Label: Equatable {
+        let accessibilityIdentifier: String?
         let numberOfLines: Int
         let text: String
         let textAlignment: NSTextAlignment

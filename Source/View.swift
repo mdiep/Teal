@@ -119,6 +119,7 @@ extension UI.View.Image {
 extension UI.View.Label {
     fileprivate func makeUIView() -> UIView {
         let label = UILabel()
+        label.accessibilityIdentifier = accessibilityIdentifier
         label.numberOfLines = numberOfLines
         label.text = text
         label.textAlignment = textAlignment

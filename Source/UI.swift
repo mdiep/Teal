@@ -61,6 +61,7 @@ extension UI {
 
 extension UI {
     public static func label(
+        accessibilityIdentifier: String? = nil,
         numberOfLines: Int = 1,
         text: String,
         textAlignment: NSTextAlignment = .natural,
@@ -70,6 +71,7 @@ extension UI {
         return UI(
             .label(
                 .init(
+                    accessibilityIdentifier: accessibilityIdentifier,
                     numberOfLines: numberOfLines,
                     text: text,
                     textAlignment: textAlignment,
