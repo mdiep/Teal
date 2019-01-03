@@ -13,15 +13,14 @@ public struct Anchor<Kind> {
 }
 
 public struct Dimension {
-    internal enum Kind {
-        case height
-        case width
+    var attribute: NSLayoutConstraint.Attribute
+
+    private init(_ attribute: NSLayoutConstraint.Attribute) {
+        self.attribute = attribute
     }
 
-    internal let kind: Kind
-
-    internal static let height = Dimension(kind: .height)
-    internal static let width = Dimension(kind: .width)
+    internal static let height = Dimension(.height)
+    internal static let width = Dimension(.width)
 }
 
 extension ID {
@@ -35,13 +34,13 @@ extension ID {
 }
 
 public struct XAxis {
-    internal enum Kind {
-        case center
+    var attribute: NSLayoutConstraint.Attribute
+
+    private init(_ attribute: NSLayoutConstraint.Attribute) {
+        self.attribute = attribute
     }
 
-    internal let kind: Kind
-
-    internal static let center = XAxis(kind: .center)
+    internal static let center = XAxis(.centerX)
 }
 
 extension ID {
@@ -51,13 +50,13 @@ extension ID {
 }
 
 public struct YAxis {
-    internal enum Kind {
-        case center
+    var attribute: NSLayoutConstraint.Attribute
+
+    private init(_ attribute: NSLayoutConstraint.Attribute) {
+        self.attribute = attribute
     }
 
-    internal let kind: Kind
-
-    internal static let center = YAxis(kind: .center)
+    internal static let center = YAxis(.centerY)
 }
 
 extension ID {
