@@ -63,6 +63,8 @@ final class ViewSnapshotTests: XCTestCase {
         assertSnapshot(matching: view, file: file, function: function, line: line)
     }
 
+    // MARK: - .button
+
     func testButton() {
         snapshot(.button(title: "Button", action: Message()))
     }
@@ -73,6 +75,8 @@ final class ViewSnapshotTests: XCTestCase {
             .button(title: "Button", action: Message())
         )
     }
+
+    // MARK: - .custom
 
     func testCustomBackgroundColor() {
         snapshot(
@@ -103,10 +107,14 @@ final class ViewSnapshotTests: XCTestCase {
         )
     }
 
+    // MARK: - .image
+
     func testImage() {
         let image = UIImage(named: "elm-lang")!
         snapshot(.image(image))
     }
+
+    // MARK: - .label
 
     func testLabel() {
         snapshot(.label(text: "Label"))
@@ -154,6 +162,8 @@ final class ViewSnapshotTests: XCTestCase {
             .label(text: "Label", font: .boldSystemFont(ofSize: 20))
         )
     }
+
+    // MARK: - .stack
 
     func testStackHorizontal() {
         snapshot(UI.stack([.label(text: "First"), .label(text: "Second")], axis: .horizontal))
