@@ -31,6 +31,13 @@ final class ViewPropertyTests: XCTestCase {
         )
         XCTAssertEqual(view.accessibilityIdentifier, "Help")
     }
+
+    func testLabelAccessibilityIdentifier() {
+        let view: UIView = makeView(
+            .label(accessibilityIdentifier: "Bar", text: "Foo")
+        )
+        XCTAssertEqual(view.accessibilityIdentifier, "Bar")
+    }
 }
 
 final class ViewSnapshotTests: XCTestCase {
