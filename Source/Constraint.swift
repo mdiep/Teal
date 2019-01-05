@@ -15,34 +15,11 @@ private protocol AttributeKind {
     var attribute: NSLayoutConstraint.Attribute { get }
 }
 
-extension Dimension: AttributeKind {
-    var attribute: NSLayoutConstraint.Attribute {
-        switch kind {
-        case .height:
-            return .height
-        case .width:
-            return .width
-        }
-    }
-}
+extension Dimension: AttributeKind {}
 
-extension XAxis: AttributeKind {
-    var attribute: NSLayoutConstraint.Attribute {
-        switch kind {
-        case .center:
-            return .centerX
-        }
-    }
-}
+extension XAxis: AttributeKind {}
 
-extension YAxis: AttributeKind {
-    var attribute: NSLayoutConstraint.Attribute {
-        switch kind {
-        case .center:
-            return .centerY
-        }
-    }
-}
+extension YAxis: AttributeKind {}
 
 extension Constraint {
     fileprivate init<Kind: AttributeKind>(
