@@ -30,6 +30,14 @@ extension ID {
     public var centerX: Anchor<XAxis> {
         return Anchor(id: self, attribute: .centerX)
     }
+
+    public var leading: Anchor<XAxis> {
+        return Anchor(id: self, attribute: .leading)
+    }
+
+    public var trailing: Anchor<XAxis> {
+        return Anchor(id: self, attribute: .trailing)
+    }
 }
 
 public enum YAxis {}
@@ -37,5 +45,13 @@ public enum YAxis {}
 extension ID {
     public var centerY: Anchor<YAxis> {
         return Anchor(id: self, attribute: .centerY)
+    }
+
+    public var top: Anchor<YAxis> {
+        return Anchor(id: self, attribute: .top)
+    }
+
+    public var bottom: Anchor<YAxis> {
+        return Anchor(id: self, attribute: .bottom)
     }
 }
