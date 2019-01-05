@@ -107,6 +107,19 @@ final class ViewSnapshotTests: XCTestCase {
         )
     }
 
+    func testCustomTopBottomLeadingTrailing() {
+        snapshot(
+            .custom(.label(text: "Label")) { view, label -> Set<Constraint> in
+                [
+                    label.top == view.top,
+                    label.bottom == view.bottom,
+                    label.leading == view.leading,
+                    label.trailing == view.trailing,
+                ]
+            }
+        )
+    }
+
     // MARK: - .image
 
     func testImage() {
