@@ -9,58 +9,33 @@ public struct ID: Hashable {
 
 public struct Anchor<Kind> {
     internal let id: ID
-    internal let kind: Kind
+    internal let attribute: NSLayoutConstraint.Attribute
 }
 
-public struct Dimension {
-    var attribute: NSLayoutConstraint.Attribute
-
-    private init(_ attribute: NSLayoutConstraint.Attribute) {
-        self.attribute = attribute
-    }
-
-    internal static let height = Dimension(.height)
-    internal static let width = Dimension(.width)
-}
+public enum Dimension {}
 
 extension ID {
     public var height: Anchor<Dimension> {
-        return Anchor(id: self, kind: .height)
+        return Anchor(id: self, attribute: .height)
     }
 
     public var width: Anchor<Dimension> {
-        return Anchor(id: self, kind: .width)
+        return Anchor(id: self, attribute: .width)
     }
 }
 
-public struct XAxis {
-    var attribute: NSLayoutConstraint.Attribute
-
-    private init(_ attribute: NSLayoutConstraint.Attribute) {
-        self.attribute = attribute
-    }
-
-    internal static let center = XAxis(.centerX)
-}
+public enum XAxis {}
 
 extension ID {
     public var centerX: Anchor<XAxis> {
-        return Anchor(id: self, kind: .center)
+        return Anchor(id: self, attribute: .centerX)
     }
 }
 
-public struct YAxis {
-    var attribute: NSLayoutConstraint.Attribute
-
-    private init(_ attribute: NSLayoutConstraint.Attribute) {
-        self.attribute = attribute
-    }
-
-    internal static let center = YAxis(.centerY)
-}
+public enum YAxis {}
 
 extension ID {
     public var centerY: Anchor<YAxis> {
-        return Anchor(id: self, kind: .center)
+        return Anchor(id: self, attribute: .centerY)
     }
 }

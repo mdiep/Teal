@@ -11,27 +11,17 @@ public struct Constraint: Hashable {
     internal let constant: Float
 }
 
-private protocol AttributeKind {
-    var attribute: NSLayoutConstraint.Attribute { get }
-}
-
-extension Dimension: AttributeKind {}
-
-extension XAxis: AttributeKind {}
-
-extension YAxis: AttributeKind {}
-
 extension Constraint {
-    fileprivate init<Kind: AttributeKind>(
+    fileprivate init<Kind>(
         _ lhs: Anchor<Kind>,
         _ relation: NSLayoutConstraint.Relation,
         _ rhs: Anchor<Kind>?,
         constant: Float = 0
     ) {
         self.init(
-            first: Constraint.Item(id: lhs.id, attribute: lhs.kind.attribute),
+            first: Constraint.Item(id: lhs.id, attribute: lhs.attribute),
             relation: relation,
-            second: rhs.map { Constraint.Item(id: $0.id, attribute: $0.kind.attribute) },
+            second: rhs.map { Constraint.Item(id: $0.id, attribute: $0.attribute) },
             constant: constant
         )
     }
