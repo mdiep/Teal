@@ -7,13 +7,6 @@ public struct ID: Hashable {
     }
 }
 
-public struct Anchor<Kind> {
-    internal let id: ID
-    internal let attribute: NSLayoutConstraint.Attribute
-}
-
-public enum Dimension {}
-
 extension ID {
     public var height: Anchor<Dimension> {
         return Anchor(id: self, attribute: .height)
@@ -23,8 +16,6 @@ extension ID {
         return Anchor(id: self, attribute: .width)
     }
 }
-
-public enum XAxis {}
 
 extension ID {
     public var centerX: Anchor<XAxis> {
@@ -39,8 +30,6 @@ extension ID {
         return Anchor(id: self, attribute: .trailing)
     }
 }
-
-public enum YAxis {}
 
 extension ID {
     public var centerY: Anchor<YAxis> {

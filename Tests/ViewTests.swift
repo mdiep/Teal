@@ -84,11 +84,11 @@ final class ViewSnapshotTests: XCTestCase {
         )
     }
 
+    // MARK: - .custom
+
     func testCustom0Subviews() {
         snapshot(.square())
     }
-
-    // MARK: - .custom
 
     func testCustomBackgroundColor() {
         snapshot(
@@ -127,6 +127,20 @@ final class ViewSnapshotTests: XCTestCase {
                     label.bottom == view.bottom,
                     label.leading == view.leading,
                     label.trailing == view.trailing,
+                ]
+            }
+        )
+    }
+
+    func testCustomTopBottomLeadingTrailingOffset() {
+        snapshot(
+            .custom(backgroundColor: .white, .square()) { view, square -> Set<Constraint> in
+                let a = square.top == view.top + 5
+                return [
+                    a,
+                    square.bottom == view.bottom - 5,
+                    square.leading == view.leading + 5,
+                    square.trailing == view.trailing - 5,
                 ]
             }
         )
