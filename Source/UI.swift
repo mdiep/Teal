@@ -60,6 +60,89 @@ extension UI {
             )
         )
     }
+
+    public static func custom(
+        accessibilityIdentifier: String? = nil,
+        backgroundColor: UIColor? = nil,
+        _ a: UI,
+        _ b: UI,
+        _ constraints: (ID, ID, ID) -> Set<Constraint>
+    ) -> UI {
+        return UI(
+            .custom(
+                .init(
+                    accessibilityIdentifier: accessibilityIdentifier,
+                    backgroundColor: backgroundColor,
+                    constraints: constraints(ID(0), ID(1), ID(2)),
+                    views: [a.view, b.view]
+                )
+            )
+        )
+    }
+
+    public static func custom(
+        accessibilityIdentifier: String? = nil,
+        backgroundColor: UIColor? = nil,
+        _ a: UI,
+        _ b: UI,
+        _ c: UI,
+        _ constraints: (ID, ID, ID, ID) -> Set<Constraint>
+    ) -> UI {
+        return UI(
+            .custom(
+                .init(
+                    accessibilityIdentifier: accessibilityIdentifier,
+                    backgroundColor: backgroundColor,
+                    constraints: constraints(ID(0), ID(1), ID(2), ID(3)),
+                    views: [a.view, b.view, c.view]
+                )
+            )
+        )
+    }
+
+    public static func custom(
+        accessibilityIdentifier: String? = nil,
+        backgroundColor: UIColor? = nil,
+        _ a: UI,
+        _ b: UI,
+        _ c: UI,
+        _ d: UI,
+        _ constraints: (ID, ID, ID, ID, ID) -> Set<Constraint>
+    ) -> UI {
+        return UI(
+            .custom(
+                .init(
+                    accessibilityIdentifier: accessibilityIdentifier,
+                    backgroundColor: backgroundColor,
+                    constraints: constraints(ID(0), ID(1), ID(2), ID(3), ID(4)),
+                    views: [a.view, b.view, c.view, d.view]
+                )
+            )
+        )
+    }
+
+    // swiftlint:disable:next function_parameter_count
+    public static func custom(
+        accessibilityIdentifier: String? = nil,
+        backgroundColor: UIColor? = nil,
+        _ a: UI,
+        _ b: UI,
+        _ c: UI,
+        _ d: UI,
+        _ e: UI,
+        _ constraints: (ID, ID, ID, ID, ID, ID) -> Set<Constraint>
+    ) -> UI {
+        return UI(
+            .custom(
+                .init(
+                    accessibilityIdentifier: accessibilityIdentifier,
+                    backgroundColor: backgroundColor,
+                    constraints: constraints(ID(0), ID(1), ID(2), ID(3), ID(4), ID(5)),
+                    views: [a.view, b.view, c.view, d.view, e.view]
+                )
+            )
+        )
+    }
 }
 
 extension UI {

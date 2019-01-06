@@ -41,8 +41,8 @@ final class ViewPropertyTests: XCTestCase {
 }
 
 extension UI {
-    fileprivate static func square() -> UI {
-        return UI.custom(backgroundColor: .gray) { view in
+    fileprivate static func square(_ color: UIColor = .gray) -> UI {
+        return UI.custom(backgroundColor: color) { view in
             [view.height == 20, view.width == 20]
         }
     }
@@ -88,6 +88,131 @@ final class ViewSnapshotTests: XCTestCase {
 
     func testCustom0Subviews() {
         snapshot(.square())
+    }
+
+    func testCustom1Subview() {
+        snapshot(
+            .custom(
+                backgroundColor: .lightGray,
+                .square()
+            ) { view, a -> Set<Constraint> in
+                [
+                    view.top == a.top,
+                    view.bottom == a.bottom,
+                    view.leading == a.leading,
+                    view.trailing == a.trailing,
+                ]
+            }
+        )
+    }
+
+    func testCustom2Subviews() {
+        snapshot(
+            .custom(
+                backgroundColor: .white,
+                .square(.red),
+                .square(.orange)
+            ) { view, a, b in
+                let constraints: Set<Constraint> = [
+                    view.top == a.top,
+                    view.bottom == a.bottom,
+                    view.leading == a.leading,
+                    b.leading == a.trailing + 5,
+                    view.top == b.top,
+                    view.bottom == b.bottom,
+                    view.trailing == b.trailing,
+                ]
+                return constraints
+            }
+        )
+    }
+
+    func testCustom3Subviews() {
+        snapshot(
+            .custom(
+                backgroundColor: .white,
+                .square(.red),
+                .square(.orange),
+                .square(.yellow)
+            ) { view, a, b, c in
+                let constraints: Set<Constraint> = [
+                    view.top == a.top,
+                    view.bottom == a.bottom,
+                    view.leading == a.leading,
+                    b.leading == a.trailing + 5,
+                    view.top == b.top,
+                    view.bottom == b.bottom,
+                    c.leading == b.trailing + 5,
+                    view.top == c.top,
+                    view.bottom == c.bottom,
+                    view.trailing == c.trailing,
+                ]
+                return constraints
+            }
+        )
+    }
+
+    func testCustom4Subviews() {
+        snapshot(
+            .custom(
+                backgroundColor: .white,
+                .square(.red),
+                .square(.orange),
+                .square(.yellow),
+                .square(.blue)
+            ) { view, a, b, c, d in
+                let constraints: Set<Constraint> = [
+                    view.top == a.top,
+                    view.bottom == a.bottom,
+                    view.leading == a.leading,
+                    b.leading == a.trailing + 5,
+                    view.top == b.top,
+                    view.bottom == b.bottom,
+                    c.leading == b.trailing + 5,
+                    view.top == c.top,
+                    view.bottom == c.bottom,
+                    d.leading == c.trailing + 5,
+                    view.top == d.top,
+                    view.bottom == d.bottom,
+                    view.trailing == d.trailing,
+                ]
+                return constraints
+            }
+        )
+    }
+
+    func testCustom5Subviews() {
+        snapshot(
+            .custom(
+                backgroundColor: .white,
+                .square(.red),
+                .square(.orange),
+                .square(.yellow),
+                .square(.blue),
+                .square(.green)
+            ) { view, a, b, c, d, e in
+                let vertical: Set<Constraint> = [
+                    view.top == a.top,
+                    view.bottom == a.bottom,
+                    view.top == b.top,
+                    view.bottom == b.bottom,
+                    view.top == c.top,
+                    view.bottom == c.bottom,
+                    view.top == d.top,
+                    view.bottom == d.bottom,
+                    view.top == e.top,
+                    view.bottom == e.bottom,
+                ]
+                var horizontal: Set<Constraint> = []
+                horizontal.insert(view.leading == a.leading)
+                horizontal.insert(b.leading == a.trailing + 5)
+                horizontal.insert(c.leading == b.trailing + 5)
+                horizontal.insert(d.leading == c.trailing + 5)
+                horizontal.insert(e.leading == d.trailing + 5)
+                horizontal.insert(view.trailing == e.trailing)
+                return vertical.union(horizontal)
+            }
+        )
     }
 
     func testCustomBackgroundColor() {
