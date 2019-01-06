@@ -1,3 +1,12 @@
+public struct Anchor<Kind> {
+    internal let id: ID
+    internal let attribute: NSLayoutConstraint.Attribute
+}
+
+public enum Dimension {}
+public enum XAxis {}
+public enum YAxis {}
+
 /// A constraint used to design a custom view.
 public struct Constraint: Hashable {
     internal struct Item: Hashable {
