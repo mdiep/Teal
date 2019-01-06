@@ -29,6 +29,23 @@ extension UI {
     public static func custom(
         accessibilityIdentifier: String? = nil,
         backgroundColor: UIColor? = nil,
+        _ constraints: (ID) -> Set<Constraint>
+    ) -> UI {
+        return UI(
+            .custom(
+                .init(
+                    accessibilityIdentifier: accessibilityIdentifier,
+                    backgroundColor: backgroundColor,
+                    constraints: constraints(ID(0)),
+                    views: []
+                )
+            )
+        )
+    }
+
+    public static func custom(
+        accessibilityIdentifier: String? = nil,
+        backgroundColor: UIColor? = nil,
         _ a: UI,
         _ constraints: (ID, ID) -> Set<Constraint>
     ) -> UI {

@@ -40,6 +40,14 @@ final class ViewPropertyTests: XCTestCase {
     }
 }
 
+extension UI {
+    fileprivate static func square() -> UI {
+        return UI.custom(backgroundColor: .gray) { view in
+            [view.height == 20, view.width == 20]
+        }
+    }
+}
+
 final class ViewSnapshotTests: XCTestCase {
     private func snapshot(
         file: StaticString = #file,
@@ -74,6 +82,10 @@ final class ViewSnapshotTests: XCTestCase {
             .button(title: "Foo", action: Message()),
             .button(title: "Button", action: Message())
         )
+    }
+
+    func testCustom0Subviews() {
+        snapshot(.square())
     }
 
     // MARK: - .custom
