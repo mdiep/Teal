@@ -184,3 +184,13 @@ extension UI {
         )
     }
 }
+
+extension UI {
+    public static func textField(
+        _ attributes: [Attribute<Message>],
+        placeholder: String = "",
+        text: String = ""
+    ) -> UI {
+        return UI(attributes, .textField(.init(placeholder: placeholder, text: text)))
+    }
+}

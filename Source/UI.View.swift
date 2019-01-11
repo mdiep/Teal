@@ -6,6 +6,7 @@ extension UI {
         case image(Image)
         case label(Label)
         case stack(Stack)
+        case textField(TextField)
     }
 }
 
@@ -42,5 +43,12 @@ extension UI.View {
     struct Stack: Equatable {
         let views: [UI]
         let axis: Axis
+    }
+}
+
+extension UI.View {
+    struct TextField: Equatable {
+        let placeholder: String
+        let text: String
     }
 }

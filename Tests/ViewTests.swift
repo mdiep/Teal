@@ -18,7 +18,12 @@ final class ViewPerformTests: XCTestCase {
 }
 
 final class ViewPropertyTests: XCTestCase {
-    func testLabelAccessibilityIdentifier() {
+    private func makeView<View: UIView>(_ ui: UI<Message>) -> View {
+        let view = Teal.View(ui) { _ in }
+        return view.subviews[0] as! View // swiftlint:disable:this force_cast
+    }
+
+    func testAccessibilityIdentifier() {
         let view = Teal.View<Message>(.label([.accessibilityIdentifier("Bar")], text: "Foo"))
 
         XCTAssertEqual(view.subviews[0].accessibilityIdentifier, "Bar")
@@ -26,6 +31,18 @@ final class ViewPropertyTests: XCTestCase {
         view.ui = .label([], text: "Foo")
 
         XCTAssertNil(view.subviews[0].accessibilityIdentifier)
+    }
+
+    // MARK: - .textField
+
+    func testTextFieldPlaceholder() {
+        let view: UITextField = makeView(.textField([], placeholder: "Placeholder"))
+        XCTAssertEqual(view.placeholder, "Placeholder")
+    }
+
+    func testTextFieldText() {
+        let view: UITextField = makeView(.textField([], text: "Text"))
+        XCTAssertEqual(view.text, "Text")
     }
 }
 
@@ -345,5 +362,11 @@ final class ViewSnapshotTests: XCTestCase {
                 axis: .vertical
             )
         )
+    }
+
+    // MARK: - .textField
+
+    func testTextField() {
+        snapshot(.textField([], text: "Foo"), width: 50)
     }
 }
