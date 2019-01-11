@@ -9,7 +9,7 @@ private struct Message: Equatable {}
 final class ViewPerformTests: XCTestCase {
     func testButton() {
         var message: Message?
-        let ui = UI<Message>.button(title: "", action: Message())
+        let ui = UI<Message>.button([.onTouchUpInside(Message())], title: "")
         let view = View(ui) { message = $0 }
         let button = view.subviews[0] as! UIButton
         button.sendActions(for: .touchUpInside)
@@ -18,31 +18,20 @@ final class ViewPerformTests: XCTestCase {
 }
 
 final class ViewPropertyTests: XCTestCase {
-    private func makeView<View: UIView>(_ ui: UI<Message>) -> View {
-        return Teal.View(ui).subviews[0] as! View
-    }
-
-    func testCustomAccessibilityIdentifier() {
-        let view: UIView = makeView(
-            .custom(
-                accessibilityIdentifier: "Help",
-                .label(text: "Foo")
-            ) { _, _ in [] }
-        )
-        XCTAssertEqual(view.accessibilityIdentifier, "Help")
-    }
-
     func testLabelAccessibilityIdentifier() {
-        let view: UIView = makeView(
-            .label(accessibilityIdentifier: "Bar", text: "Foo")
-        )
-        XCTAssertEqual(view.accessibilityIdentifier, "Bar")
+        let view = Teal.View<Message>(.label([.accessibilityIdentifier("Bar")], text: "Foo"))
+
+        XCTAssertEqual(view.subviews[0].accessibilityIdentifier, "Bar")
+
+        view.ui = .label([], text: "Foo")
+
+        XCTAssertNil(view.subviews[0].accessibilityIdentifier)
     }
 }
 
 extension UI {
     fileprivate static func square(_ color: UIColor = .gray) -> UI {
-        return UI.custom(backgroundColor: color) { view in
+        return UI.custom([.backgroundColor(color)]) { view in
             [view.height == 20, view.width == 20]
         }
     }
@@ -74,13 +63,13 @@ final class ViewSnapshotTests: XCTestCase {
     // MARK: - .button
 
     func testButton() {
-        snapshot(.button(title: "Button", action: Message()))
+        snapshot(.button([], title: "Button"))
     }
 
     func testButtonChangeTitle() {
         snapshot(
-            .button(title: "Foo", action: Message()),
-            .button(title: "Button", action: Message())
+            .button([], title: "Foo"),
+            .button([], title: "Button")
         )
     }
 
@@ -93,7 +82,7 @@ final class ViewSnapshotTests: XCTestCase {
     func testCustom1Subview() {
         snapshot(
             .custom(
-                backgroundColor: .lightGray,
+                [.backgroundColor(.lightGray)],
                 .square()
             ) { view, a -> Set<Constraint> in
                 [
@@ -109,7 +98,7 @@ final class ViewSnapshotTests: XCTestCase {
     func testCustom2Subviews() {
         snapshot(
             .custom(
-                backgroundColor: .white,
+                [.backgroundColor(.white)],
                 .square(.red),
                 .square(.orange)
             ) { view, a, b in
@@ -130,7 +119,7 @@ final class ViewSnapshotTests: XCTestCase {
     func testCustom3Subviews() {
         snapshot(
             .custom(
-                backgroundColor: .white,
+                [.backgroundColor(.white)],
                 .square(.red),
                 .square(.orange),
                 .square(.yellow)
@@ -155,7 +144,7 @@ final class ViewSnapshotTests: XCTestCase {
     func testCustom4Subviews() {
         snapshot(
             .custom(
-                backgroundColor: .white,
+                [.backgroundColor(.white)],
                 .square(.red),
                 .square(.orange),
                 .square(.yellow),
@@ -184,7 +173,7 @@ final class ViewSnapshotTests: XCTestCase {
     func testCustom5Subviews() {
         snapshot(
             .custom(
-                backgroundColor: .white,
+                [.backgroundColor(.white)],
                 .square(.red),
                 .square(.orange),
                 .square(.yellow),
@@ -218,8 +207,8 @@ final class ViewSnapshotTests: XCTestCase {
     func testCustomBackgroundColor() {
         snapshot(
             .custom(
-                backgroundColor: .lightGray,
-                .label(text: "Label")
+                [.backgroundColor(.lightGray)],
+                .label([], text: "Label")
             ) { view, label -> Set<Constraint> in
                 [
                     view.width == 200,
@@ -233,7 +222,7 @@ final class ViewSnapshotTests: XCTestCase {
 
     func testCustomHeightWidthCenter() {
         snapshot(
-            .custom(.label(text: "Label")) { view, label -> Set<Constraint> in
+            .custom([], .label([], text: "Label")) { view, label -> Set<Constraint> in
                 [
                     view.width == 200,
                     view.height == 50,
@@ -246,7 +235,7 @@ final class ViewSnapshotTests: XCTestCase {
 
     func testCustomTopBottomLeadingTrailing() {
         snapshot(
-            .custom(.label(text: "Label")) { view, label -> Set<Constraint> in
+            .custom([], .label([], text: "Label")) { view, label -> Set<Constraint> in
                 [
                     label.top == view.top,
                     label.bottom == view.bottom,
@@ -259,7 +248,7 @@ final class ViewSnapshotTests: XCTestCase {
 
     func testCustomTopBottomLeadingTrailingOffset() {
         snapshot(
-            .custom(backgroundColor: .white, .square()) { view, square -> Set<Constraint> in
+            .custom([.backgroundColor(.white)], .square()) { view, square -> Set<Constraint> in
                 let a = square.top == view.top + 5
                 return [
                     a,
@@ -275,74 +264,86 @@ final class ViewSnapshotTests: XCTestCase {
 
     func testImage() {
         let image = UIImage(named: "elm-lang")!
-        snapshot(.image(image))
+        snapshot(.image([], image))
     }
 
     // MARK: - .label
 
     func testLabel() {
-        snapshot(.label(text: "Label"))
+        snapshot(.label([], text: "Label"))
     }
 
     func testLabelNumberOfLines() {
         snapshot(
-            .label(numberOfLines: 0, text: "Foo Bar Baz"),
+            .label([], numberOfLines: 0, text: "Foo Bar Baz"),
             width: 40
         )
     }
 
     func testLabelChangeText() {
         snapshot(
-            .label(text: "Foo"),
-            .label(text: "Label")
+            .label([], text: "Foo"),
+            .label([], text: "Label")
         )
     }
 
     func testLabelTextAlignment() {
         snapshot(
-            .label(text: "Label", textAlignment: .center),
+            .label([], text: "Label", textAlignment: .center),
             width: 200
         )
     }
 
     func testLabelTextColor() {
-        snapshot(.label(text: "Label", textColor: .red))
+        snapshot(.label([], text: "Label", textColor: .red))
     }
 
     func testLabelChangeTextColor() {
         snapshot(
-            .label(text: "Label"),
-            .label(text: "Label", textColor: .red)
+            .label([], text: "Label"),
+            .label([], text: "Label", textColor: .red)
         )
     }
 
     func testLabelFont() {
-        snapshot(.label(text: "Label", font: .boldSystemFont(ofSize: 20)))
+        snapshot(.label([], text: "Label", font: .boldSystemFont(ofSize: 20)))
     }
 
     func testLabelChangeFont() {
         snapshot(
-            .label(text: "Label"),
-            .label(text: "Label", font: .boldSystemFont(ofSize: 20))
+            .label([], text: "Label"),
+            .label([], text: "Label", font: .boldSystemFont(ofSize: 20))
         )
     }
 
     // MARK: - .stack
 
     func testStackHorizontal() {
-        snapshot(UI.stack([.label(text: "First"), .label(text: "Second")], axis: .horizontal))
+        snapshot(
+            UI.stack(
+                [],
+                [.label([], text: "First"), .label([], text: "Second")],
+                axis: .horizontal
+            )
+        )
     }
 
     func testStackChangeAxis() {
-        let label1: UI<Message> = .label(text: "First")
-        let label2: UI<Message> = .label(text: "Second")
+        let label1: UI<Message> = .label([], text: "First")
+        let label2: UI<Message> = .label([], text: "Second")
         snapshot(
-            UI.stack([label1, label2], axis: .horizontal),
-            UI.stack([label1, label2], axis: .vertical)
+            UI.stack([], [label1, label2], axis: .horizontal),
+            UI.stack([], [label1, label2], axis: .vertical)
         )
     }
 
     func testStackVertical() {
-        snapshot(UI.stack([.label(text: "First"), .label(text: "Second")], axis: .vertical))
+        snapshot(
+            UI.stack(
+                [],
+                [.label([], text: "First"), .label([], text: "Second")],
+                axis: .vertical
+            )
+        )
     }
 }
