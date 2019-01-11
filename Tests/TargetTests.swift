@@ -2,10 +2,10 @@
 import XCTest
 
 final class TargetTests: XCTestCase {
-    func testUIButtonTouchUpInside() {
+    func testUIControlSetBlockForEvent() {
         var done = false
         let button = UIButton()
-        button.touchUpInside = { done = true }
+        button.setBlock(for: .touchUpInside) { done = true }
 
         button.sendActions(for: .touchUpInside)
 
@@ -15,8 +15,8 @@ final class TargetTests: XCTestCase {
     func testUIButtonTouchUpInsideReset() {
         var done = false
         let button = UIButton()
-        button.touchUpInside = { done = true }
-        button.touchUpInside = {}
+        button.setBlock(for: .touchUpInside) { done = true }
+        button.setBlock(for: .touchUpInside) {}
 
         button.sendActions(for: .touchUpInside)
 

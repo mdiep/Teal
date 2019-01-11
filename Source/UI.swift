@@ -1,8 +1,10 @@
 /// An element in a user interface.
 public struct UI<Message: Equatable>: Equatable {
+    internal let attributes: [Attribute<Message>]
     internal let view: View
 
-    internal init(_ view: View) {
+    internal init(_ attributes: [Attribute<Message>], _ view: View) {
+        self.attributes = attributes
         self.view = view
     }
 }
@@ -13,29 +15,23 @@ public enum Axis: Equatable {
 }
 
 extension UI {
-    public static func button(title: String, action: Message) -> UI {
+    public static func button(_ attributes: [Attribute<Message>], title: String) -> UI {
         return UI(
-            .button(
-                .init(
-                    title: title,
-                    action: action
-                )
-            )
+            attributes,
+            .button(.init(title: title))
         )
     }
 }
 
 extension UI {
     public static func custom(
-        accessibilityIdentifier: String? = nil,
-        backgroundColor: UIColor? = nil,
+        _ attributes: [Attribute<Message>],
         _ constraints: (ID) -> Set<Constraint>
     ) -> UI {
         return UI(
+            attributes,
             .custom(
                 .init(
-                    accessibilityIdentifier: accessibilityIdentifier,
-                    backgroundColor: backgroundColor,
                     constraints: constraints(ID(0)),
                     views: []
                 )
@@ -44,78 +40,51 @@ extension UI {
     }
 
     public static func custom(
-        accessibilityIdentifier: String? = nil,
-        backgroundColor: UIColor? = nil,
+        _ attributes: [Attribute<Message>],
         _ a: UI,
         _ constraints: (ID, ID) -> Set<Constraint>
     ) -> UI {
         return UI(
+            attributes,
             .custom(
                 .init(
-                    accessibilityIdentifier: accessibilityIdentifier,
-                    backgroundColor: backgroundColor,
                     constraints: constraints(ID(0), ID(1)),
-                    views: [a.view]
+                    views: [a]
                 )
             )
         )
     }
 
     public static func custom(
-        accessibilityIdentifier: String? = nil,
-        backgroundColor: UIColor? = nil,
+        _ attributes: [Attribute<Message>],
         _ a: UI,
         _ b: UI,
         _ constraints: (ID, ID, ID) -> Set<Constraint>
     ) -> UI {
         return UI(
+            attributes,
             .custom(
                 .init(
-                    accessibilityIdentifier: accessibilityIdentifier,
-                    backgroundColor: backgroundColor,
                     constraints: constraints(ID(0), ID(1), ID(2)),
-                    views: [a.view, b.view]
+                    views: [a, b]
                 )
             )
         )
     }
 
     public static func custom(
-        accessibilityIdentifier: String? = nil,
-        backgroundColor: UIColor? = nil,
+        _ attributes: [Attribute<Message>],
         _ a: UI,
         _ b: UI,
         _ c: UI,
         _ constraints: (ID, ID, ID, ID) -> Set<Constraint>
     ) -> UI {
         return UI(
+            attributes,
             .custom(
                 .init(
-                    accessibilityIdentifier: accessibilityIdentifier,
-                    backgroundColor: backgroundColor,
                     constraints: constraints(ID(0), ID(1), ID(2), ID(3)),
-                    views: [a.view, b.view, c.view]
-                )
-            )
-        )
-    }
-
-    public static func custom(
-        accessibilityIdentifier: String? = nil,
-        backgroundColor: UIColor? = nil,
-        _ a: UI,
-        _ b: UI,
-        _ c: UI,
-        _ d: UI,
-        _ constraints: (ID, ID, ID, ID, ID) -> Set<Constraint>
-    ) -> UI {
-        return UI(
-            .custom(
-                .init(
-                    accessibilityIdentifier: accessibilityIdentifier,
-                    backgroundColor: backgroundColor,
-                    constraints: constraints(ID(0), ID(1), ID(2), ID(3), ID(4)),
-                    views: [a.view, b.view, c.view, d.view]
+                    views: [a, b, c]
                 )
             )
         )
@@ -123,8 +92,27 @@ extension UI {
 
     // swiftlint:disable:next function_parameter_count
     public static func custom(
-        accessibilityIdentifier: String? = nil,
-        backgroundColor: UIColor? = nil,
+        _ attributes: [Attribute<Message>],
+        _ a: UI,
+        _ b: UI,
+        _ c: UI,
+        _ d: UI,
+        _ constraints: (ID, ID, ID, ID, ID) -> Set<Constraint>
+    ) -> UI {
+        return UI(
+            attributes,
+            .custom(
+                .init(
+                    constraints: constraints(ID(0), ID(1), ID(2), ID(3), ID(4)),
+                    views: [a, b, c, d]
+                )
+            )
+        )
+    }
+
+    // swiftlint:disable:next function_parameter_count
+    public static func custom(
+        _ attributes: [Attribute<Message>],
         _ a: UI,
         _ b: UI,
         _ c: UI,
@@ -133,12 +121,11 @@ extension UI {
         _ constraints: (ID, ID, ID, ID, ID, ID) -> Set<Constraint>
     ) -> UI {
         return UI(
+            attributes,
             .custom(
                 .init(
-                    accessibilityIdentifier: accessibilityIdentifier,
-                    backgroundColor: backgroundColor,
                     constraints: constraints(ID(0), ID(1), ID(2), ID(3), ID(4), ID(5)),
-                    views: [a.view, b.view, c.view, d.view, e.view]
+                    views: [a, b, c, d, e]
                 )
             )
         )
@@ -147,9 +134,11 @@ extension UI {
 
 extension UI {
     public static func image(
+        _ attributes: [Attribute<Message>],
         _ image: UIImage
     ) -> UI {
         return UI(
+            attributes,
             .image(
                 .init(
                     image: image
@@ -161,7 +150,7 @@ extension UI {
 
 extension UI {
     public static func label(
-        accessibilityIdentifier: String? = nil,
+        _ attributes: [Attribute<Message>],
         numberOfLines: Int = 1,
         text: String,
         textAlignment: NSTextAlignment = .natural,
@@ -169,9 +158,9 @@ extension UI {
         font: UIFont? = nil
     ) -> UI {
         return UI(
+            attributes,
             .label(
                 .init(
-                    accessibilityIdentifier: accessibilityIdentifier,
                     numberOfLines: numberOfLines,
                     text: text,
                     textAlignment: textAlignment,
@@ -184,14 +173,14 @@ extension UI {
 }
 
 extension UI {
-    public static func stack(_ elements: [UI], axis: Axis) -> UI {
+    public static func stack(
+        _ attributes: [Attribute<Message>],
+        _ elements: [UI],
+        axis: Axis
+    ) -> UI {
         return UI(
-            .stack(
-                .init(
-                    views: elements.map { $0.view },
-                    axis: axis
-                )
-            )
+            attributes,
+            .stack(.init(views: elements, axis: axis))
         )
     }
 }

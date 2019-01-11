@@ -17,23 +17,25 @@ private final class Target: NSObject {
 private let objc_get = objc_getAssociatedObject
 private let objc_set = objc_setAssociatedObject
 
-extension UIButton {
+extension UIControl {
     private enum Keys {
-        static var touchUpInside = "touchUpInside"
+        static var targets = "targets"
     }
 
-    internal var touchUpInside: () -> Void {
-        get {
-            let target = objc_get(self, &Keys.touchUpInside) as? Target
-            return target?.block ?? {}
-        }
-        set {
-            removeTarget(nil, action: nil, for: .touchUpInside)
+    internal func setBlock(for event: Teal.Event, _ block: @escaping () -> Void) {
+        var targets: [Teal.Event: Target]
 
-            let target = Target(newValue)
-            addTarget(target, action: #selector(Target.execute), for: .touchUpInside)
-
-            objc_set(self, &Keys.touchUpInside, target, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        if let object = objc_get(self, &Keys.targets) {
+            removeTarget(nil, action: nil, for: event.uikitEvent)
+            targets = object as! [Teal.Event: Target] // swiftlint:disable:this force_cast
+        } else {
+            targets = [:]
         }
+
+        let target = Target(block)
+        addTarget(target, action: #selector(Target.execute), for: event.uikitEvent)
+
+        targets[event] = target
+        objc_set(self, &Keys.targets, targets, .OBJC_ASSOCIATION_COPY)
     }
 }

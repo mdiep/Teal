@@ -23,6 +23,8 @@
 		BE9A3AEA21A7816F001D7872 /* ID.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9A3AE921A7816F001D7872 /* ID.swift */; };
 		BE9A3AEC21AA2DF1001D7872 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9A3AEB21AA2DF1001D7872 /* Screen.swift */; };
 		BE9A3AEE21AA2F88001D7872 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9A3AED21AA2F88001D7872 /* ViewController.swift */; };
+		BE9A3BE521E7DFED001D7872 /* Attribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9A3BE421E7DFED001D7872 /* Attribute.swift */; };
+		BE9A3BE721E7E63F001D7872 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9A3BE621E7E63F001D7872 /* Event.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,8 @@
 		BE9A3AE921A7816F001D7872 /* ID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ID.swift; sourceTree = "<group>"; };
 		BE9A3AEB21AA2DF1001D7872 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		BE9A3AED21AA2F88001D7872 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BE9A3BE421E7DFED001D7872 /* Attribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attribute.swift; sourceTree = "<group>"; };
+		BE9A3BE621E7E63F001D7872 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,7 +133,9 @@
 		BE3FBE18217A01BB00D75284 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				BE9A3BE421E7DFED001D7872 /* Attribute.swift */,
 				BE9A3AE721A7811B001D7872 /* Constraint.swift */,
+				BE9A3BE621E7E63F001D7872 /* Event.swift */,
 				BE9A3AE921A7816F001D7872 /* ID.swift */,
 				BE3FBE1A217A01BB00D75284 /* Info.plist */,
 				BE9A3AEB21AA2DF1001D7872 /* Screen.swift */,
@@ -313,6 +319,8 @@
 				BE2D0F9221AB7876004D56A1 /* Target.swift in Sources */,
 				BE9A3AE821A7811B001D7872 /* Constraint.swift in Sources */,
 				BE3FBE5A217A0EF800D75284 /* UI.View.swift in Sources */,
+				BE9A3BE521E7DFED001D7872 /* Attribute.swift in Sources */,
+				BE9A3BE721E7E63F001D7872 /* Event.swift in Sources */,
 				BE3FBE58217A0D7F00D75284 /* UI.swift in Sources */,
 				BE9A3AEA21A7816F001D7872 /* ID.swift in Sources */,
 				BE9A3AEE21AA2F88001D7872 /* ViewController.swift in Sources */,

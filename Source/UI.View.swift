@@ -12,16 +12,13 @@ extension UI {
 extension UI.View {
     struct Button: Equatable {
         let title: String
-        let action: Message
     }
 }
 
 extension UI.View {
     struct Custom: Equatable {
-        let accessibilityIdentifier: String?
-        let backgroundColor: UIColor?
         let constraints: Set<Constraint>
-        let views: [UI.View]
+        let views: [UI]
     }
 }
 
@@ -33,7 +30,6 @@ extension UI.View {
 
 extension UI.View {
     struct Label: Equatable {
-        let accessibilityIdentifier: String?
         let numberOfLines: Int
         let text: String
         let textAlignment: NSTextAlignment
@@ -44,7 +40,7 @@ extension UI.View {
 
 extension UI.View {
     struct Stack: Equatable {
-        let views: [UI.View]
+        let views: [UI]
         let axis: Axis
     }
 }

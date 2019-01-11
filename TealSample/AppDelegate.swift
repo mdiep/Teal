@@ -15,9 +15,10 @@ extension AppDelegate: UIApplicationDelegate {
             initial: 0,
             render: { _ in
                 return .stack(
+                    [],
                     [
-                        .label(text: "Go"),
-                        .button(title: "Go", action: 0),
+                        .label([], text: "Go"),
+                        .button([.onTouchUpInside(0)], title: "Go"),
                     ],
                     axis: .vertical
                 )

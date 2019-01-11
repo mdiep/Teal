@@ -1,10 +1,20 @@
 import UIKit
 
+extension UIView {
+    fileprivate func constrainEdgesToSubview(_ view: UIView) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        view.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        view.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        view.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+    }
+}
+
 /// A `UIView` that hosts a `Teal.UI`.
 public final class View<Message: Equatable>: UIView {
     public var ui: UI<Message> {
         didSet {
-            view = ui.view.makeUIView { [weak self] message in
+            view = ui.makeUIView { [weak self] message in
                 self?.perform(message)
             }
         }
@@ -17,12 +27,8 @@ public final class View<Message: Equatable>: UIView {
             view.removeFromSuperview()
         }
         didSet {
-            view.translatesAutoresizingMaskIntoConstraints = false
             addSubview(view)
-            view.topAnchor.constraint(equalTo: topAnchor).isActive = true
-            view.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-            view.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-            view.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+            constrainEdgesToSubview(view)
         }
     }
 
@@ -47,14 +53,14 @@ public final class View<Message: Equatable>: UIView {
     }
 }
 
-extension UI.View {
+extension UI {
     fileprivate func makeUIView(
         _ perform: @escaping (Message) -> Void
     ) -> UIView {
-        let view: UIView
-        switch self {
+        let view: UIControl
+        switch self.view {
         case let .button(button):
-            view = button.makeUIView(perform)
+            view = button.makeUIView()
         case let .custom(custom):
             view = custom.makeUIView(perform)
         case let .image(image):
@@ -64,18 +70,16 @@ extension UI.View {
         case let .stack(stack):
             view = stack.makeUIView(perform)
         }
+        attributes.forEach { $0.apply(to: view, perform) }
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }
 }
 
 extension UI.View.Button {
-    fileprivate func makeUIView(
-        _ perform: @escaping (Message) -> Void
-    ) -> UIView {
+    fileprivate func makeUIView() -> UIControl {
         let button = UIButton()
         button.setTitle(title, for: .normal)
-        button.touchUpInside = { [action = self.action] in perform(action) }
         return button
     }
 }
@@ -83,10 +87,8 @@ extension UI.View.Button {
 extension UI.View.Custom {
     fileprivate func makeUIView(
         _ perform: @escaping (Message) -> Void
-    ) -> UIView {
-        let view = UIView()
-        view.accessibilityIdentifier = accessibilityIdentifier
-        view.backgroundColor = backgroundColor
+    ) -> UIControl {
+        let view = UIControl()
 
         let subviews = views.map { $0.makeUIView(perform) }
         subviews.forEach(view.addSubview)
@@ -109,34 +111,45 @@ extension UI.View.Custom {
 }
 
 extension UI.View.Image {
-    fileprivate func makeUIView() -> UIView {
+    fileprivate func makeUIView() -> UIControl {
         let view = UIImageView()
         view.image = image
-        return view
+
+        let control = UIControl()
+        control.addSubview(view)
+        control.constrainEdgesToSubview(view)
+        return control
     }
 }
 
 extension UI.View.Label {
-    fileprivate func makeUIView() -> UIView {
+    fileprivate func makeUIView() -> UIControl {
         let label = UILabel()
-        label.accessibilityIdentifier = accessibilityIdentifier
         label.numberOfLines = numberOfLines
         label.text = text
         label.textAlignment = textAlignment
         label.textColor = textColor
         label.font = font
         label.sizeToFit()
-        return label
+
+        let control = UIControl()
+        control.addSubview(label)
+        control.constrainEdgesToSubview(label)
+        return control
     }
 }
 
 extension UI.View.Stack {
     fileprivate func makeUIView(
         _ perform: @escaping (Message) -> Void
-    ) -> UIView {
+    ) -> UIControl {
         let views = self.views.map { $0.makeUIView(perform) }
         let stack = UIStackView(arrangedSubviews: views)
         stack.axis = axis == .vertical ? .vertical : .horizontal
-        return stack
+
+        let control = UIControl()
+        control.addSubview(stack)
+        control.constrainEdgesToSubview(stack)
+        return control
     }
 }
