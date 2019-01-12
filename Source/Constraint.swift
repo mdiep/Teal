@@ -1,66 +1,76 @@
 /// An anchor used to build constraints.
-public struct Anchor<Kind> {
+public struct Anchor<Kind>: Equatable {
     internal let id: ID
     internal let attribute: NSLayoutConstraint.Attribute
+}
+
+internal struct AnyAnchor: Hashable {
+    internal let id: ID
+    internal let attribute: NSLayoutConstraint.Attribute
+}
+
+extension AnyAnchor {
+    init<Kind>(_ anchor: Anchor<Kind>) {
+        id = anchor.id
+        attribute = anchor.attribute
+    }
 }
 
 public enum Dimension {}
 public enum XAxis {}
 public enum YAxis {}
 
-/// An anchor that's offset by a constant number of points.
-public struct OffsetAnchor<Kind> {
-    internal let anchor: Anchor<Kind>
-    internal let offset: Float
+/// A target that an anchor can be constrained to.
+public struct AnchorTarget<Kind>: Equatable {
+    internal let anchor: Anchor<Kind>?
+    internal let offset: CGFloat
 }
 
-public func + <Kind>(lhs: Anchor<Kind>, rhs: Float) -> OffsetAnchor<Kind> {
-    return OffsetAnchor(anchor: lhs, offset: rhs)
+internal struct AnyAnchorTarget: Hashable {
+    internal let anchor: AnyAnchor?
+    internal let offset: CGFloat
 }
 
-public func - <Kind>(lhs: Anchor<Kind>, rhs: Float) -> OffsetAnchor<Kind> {
-    return OffsetAnchor(anchor: lhs, offset: -rhs)
+extension AnyAnchorTarget {
+    init<Kind>(_ target: AnchorTarget<Kind>) {
+        anchor = target.anchor.map(AnyAnchor.init)
+        offset = target.offset
+    }
+}
+
+public func + <Kind>(lhs: Anchor<Kind>, rhs: CGFloat) -> AnchorTarget<Kind> {
+    return AnchorTarget(anchor: lhs, offset: rhs)
+}
+
+public func - <Kind>(lhs: Anchor<Kind>, rhs: CGFloat) -> AnchorTarget<Kind> {
+    return AnchorTarget(anchor: lhs, offset: -rhs)
 }
 
 /// A constraint used to design a custom view.
 public struct Constraint: Hashable {
-    internal struct Item: Hashable {
-        internal let id: ID
-        internal let attribute: NSLayoutConstraint.Attribute
-    }
-
-    internal let first: Item
+    internal let first: AnyAnchor
     internal let relation: NSLayoutConstraint.Relation
-    internal let second: Item?
-    internal var constant: Float
-}
+    internal let second: AnyAnchorTarget
 
-extension Constraint {
     fileprivate init<Kind>(
-        _ lhs: Anchor<Kind>,
+        _ first: Anchor<Kind>,
         _ relation: NSLayoutConstraint.Relation,
-        _ rhs: Anchor<Kind>?,
-        constant: Float = 0
+        _ second: AnchorTarget<Kind>
     ) {
-        self.init(
-            first: Constraint.Item(id: lhs.id, attribute: lhs.attribute),
-            relation: relation,
-            second: rhs.map { Constraint.Item(id: $0.id, attribute: $0.attribute) },
-            constant: constant
-        )
+        self.first = AnyAnchor(first)
+        self.relation = relation
+        self.second = AnyAnchorTarget(second)
     }
 }
 
 public func == <Kind>(lhs: Anchor<Kind>, rhs: Anchor<Kind>) -> Constraint {
+    return lhs == AnchorTarget(anchor: rhs, offset: 0)
+}
+
+public func == <Kind>(lhs: Anchor<Kind>, rhs: CGFloat) -> Constraint {
+    return lhs == AnchorTarget(anchor: nil, offset: rhs)
+}
+
+public func == <Kind>(lhs: Anchor<Kind>, rhs: AnchorTarget<Kind>) -> Constraint {
     return Constraint(lhs, .equal, rhs)
-}
-
-public func == <Kind>(lhs: Anchor<Kind>, rhs: Float) -> Constraint {
-    return Constraint(lhs, .equal, nil, constant: rhs)
-}
-
-public func == <Kind>(lhs: Anchor<Kind>, rhs: OffsetAnchor<Kind>) -> Constraint {
-    var constraint = lhs == rhs.anchor
-    constraint.constant = rhs.offset
-    return constraint
 }
