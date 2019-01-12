@@ -69,6 +69,8 @@ extension UI {
             view = label.makeUIView()
         case let .stack(stack):
             view = stack.makeUIView(perform)
+        case let .textField(textField):
+            view = textField.makeUIView()
         }
         attributes.forEach { $0.apply(to: view, perform) }
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -151,5 +153,14 @@ extension UI.View.Stack {
         control.addSubview(stack)
         control.constrainEdgesToSubview(stack)
         return control
+    }
+}
+
+extension UI.View.TextField {
+    fileprivate func makeUIView() -> UIControl {
+        let view = UITextField()
+        view.placeholder = placeholder
+        view.text = text
+        return view
     }
 }
