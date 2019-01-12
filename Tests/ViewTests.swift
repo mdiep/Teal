@@ -49,7 +49,10 @@ final class ViewPropertyTests: XCTestCase {
 extension UI {
     fileprivate static func square(_ color: UIColor = .gray) -> UI {
         return UI.custom([.backgroundColor(color)]) { view in
-            [view.height == 20, view.width == 20]
+            [
+                .equal(view.height, .const(20)),
+                .equal(view.width, .const(20)),
+            ]
         }
     }
 }
@@ -101,12 +104,12 @@ final class ViewSnapshotTests: XCTestCase {
             .custom(
                 [.backgroundColor(.lightGray)],
                 .square()
-            ) { view, a -> Set<Constraint> in
+            ) { view, a in
                 [
-                    view.top == a.top,
-                    view.bottom == a.bottom,
-                    view.leading == a.leading,
-                    view.trailing == a.trailing,
+                    .equal(view.top, .anchor(a.top)),
+                    .equal(view.bottom, .anchor(a.bottom)),
+                    .equal(view.leading, .anchor(a.leading)),
+                    .equal(view.trailing, .anchor(a.trailing)),
                 ]
             }
         )
@@ -119,16 +122,15 @@ final class ViewSnapshotTests: XCTestCase {
                 .square(.red),
                 .square(.orange)
             ) { view, a, b in
-                let constraints: Set<Constraint> = [
-                    view.top == a.top,
-                    view.bottom == a.bottom,
-                    view.leading == a.leading,
-                    b.leading == a.trailing + 5,
-                    view.top == b.top,
-                    view.bottom == b.bottom,
-                    view.trailing == b.trailing,
+                [
+                    .equal(view.top, .anchor(a.top)),
+                    .equal(view.bottom, .anchor(a.bottom)),
+                    .equal(view.leading, .anchor(a.leading)),
+                    .equal(b.leading, .add(5, .anchor(a.trailing))),
+                    .equal(view.top, .anchor(b.top)),
+                    .equal(view.bottom, .anchor(b.bottom)),
+                    .equal(view.trailing, .anchor(b.trailing)),
                 ]
-                return constraints
             }
         )
     }
@@ -141,19 +143,18 @@ final class ViewSnapshotTests: XCTestCase {
                 .square(.orange),
                 .square(.yellow)
             ) { view, a, b, c in
-                let constraints: Set<Constraint> = [
-                    view.top == a.top,
-                    view.bottom == a.bottom,
-                    view.leading == a.leading,
-                    b.leading == a.trailing + 5,
-                    view.top == b.top,
-                    view.bottom == b.bottom,
-                    c.leading == b.trailing + 5,
-                    view.top == c.top,
-                    view.bottom == c.bottom,
-                    view.trailing == c.trailing,
+                [
+                    .equal(view.top, .anchor(a.top)),
+                    .equal(view.bottom, .anchor(a.bottom)),
+                    .equal(view.top, .anchor(b.top)),
+                    .equal(view.bottom, .anchor(b.bottom)),
+                    .equal(view.top, .anchor(c.top)),
+                    .equal(view.bottom, .anchor(c.bottom)),
+                    .equal(view.leading, .anchor(a.leading)),
+                    .equal(b.leading, .add(5, .anchor(a.trailing))),
+                    .equal(c.leading, .add(5, .anchor(b.trailing))),
+                    .equal(view.trailing, .anchor(c.trailing)),
                 ]
-                return constraints
             }
         )
     }
@@ -167,22 +168,21 @@ final class ViewSnapshotTests: XCTestCase {
                 .square(.yellow),
                 .square(.blue)
             ) { view, a, b, c, d in
-                let constraints: Set<Constraint> = [
-                    view.top == a.top,
-                    view.bottom == a.bottom,
-                    view.leading == a.leading,
-                    b.leading == a.trailing + 5,
-                    view.top == b.top,
-                    view.bottom == b.bottom,
-                    c.leading == b.trailing + 5,
-                    view.top == c.top,
-                    view.bottom == c.bottom,
-                    d.leading == c.trailing + 5,
-                    view.top == d.top,
-                    view.bottom == d.bottom,
-                    view.trailing == d.trailing,
+                [
+                    .equal(view.top, .anchor(a.top)),
+                    .equal(view.bottom, .anchor(a.bottom)),
+                    .equal(view.top, .anchor(b.top)),
+                    .equal(view.bottom, .anchor(b.bottom)),
+                    .equal(view.top, .anchor(c.top)),
+                    .equal(view.bottom, .anchor(c.bottom)),
+                    .equal(view.top, .anchor(d.top)),
+                    .equal(view.bottom, .anchor(d.bottom)),
+                    .equal(view.leading, .anchor(a.leading)),
+                    .equal(b.leading, .add(5, .anchor(a.trailing))),
+                    .equal(c.leading, .add(5, .anchor(b.trailing))),
+                    .equal(d.leading, .add(5, .anchor(c.trailing))),
+                    .equal(view.trailing, .anchor(d.trailing)),
                 ]
-                return constraints
             }
         )
     }
@@ -197,26 +197,24 @@ final class ViewSnapshotTests: XCTestCase {
                 .square(.blue),
                 .square(.green)
             ) { view, a, b, c, d, e in
-                let vertical: Set<Constraint> = [
-                    view.top == a.top,
-                    view.bottom == a.bottom,
-                    view.top == b.top,
-                    view.bottom == b.bottom,
-                    view.top == c.top,
-                    view.bottom == c.bottom,
-                    view.top == d.top,
-                    view.bottom == d.bottom,
-                    view.top == e.top,
-                    view.bottom == e.bottom,
+                [
+                    .equal(view.top, .anchor(a.top)),
+                    .equal(view.bottom, .anchor(a.bottom)),
+                    .equal(view.top, .anchor(b.top)),
+                    .equal(view.bottom, .anchor(b.bottom)),
+                    .equal(view.top, .anchor(c.top)),
+                    .equal(view.bottom, .anchor(c.bottom)),
+                    .equal(view.top, .anchor(d.top)),
+                    .equal(view.bottom, .anchor(d.bottom)),
+                    .equal(view.top, .anchor(e.top)),
+                    .equal(view.bottom, .anchor(e.bottom)),
+                    .equal(view.leading, .anchor(a.leading)),
+                    .equal(b.leading, .add(5, .anchor(a.trailing))),
+                    .equal(c.leading, .add(5, .anchor(b.trailing))),
+                    .equal(d.leading, .add(5, .anchor(c.trailing))),
+                    .equal(e.leading, .add(5, .anchor(d.trailing))),
+                    .equal(view.trailing, .anchor(e.trailing)),
                 ]
-                var horizontal: Set<Constraint> = []
-                horizontal.insert(view.leading == a.leading)
-                horizontal.insert(b.leading == a.trailing + 5)
-                horizontal.insert(c.leading == b.trailing + 5)
-                horizontal.insert(d.leading == c.trailing + 5)
-                horizontal.insert(e.leading == d.trailing + 5)
-                horizontal.insert(view.trailing == e.trailing)
-                return vertical.union(horizontal)
             }
         )
     }
@@ -226,12 +224,12 @@ final class ViewSnapshotTests: XCTestCase {
             .custom(
                 [.backgroundColor(.lightGray)],
                 .label([], text: "Label")
-            ) { view, label -> Set<Constraint> in
+            ) { view, label in
                 [
-                    view.width == 200,
-                    view.height == 50,
-                    label.centerX == view.centerX,
-                    label.centerY == view.centerY,
+                    .equal(view.width, .const(200)),
+                    .equal(view.height, .const(50)),
+                    .equal(label.centerX, .anchor(view.centerX)),
+                    .equal(label.centerY, .anchor(view.centerY)),
                 ]
             }
         )
@@ -239,12 +237,12 @@ final class ViewSnapshotTests: XCTestCase {
 
     func testCustomHeightWidthCenter() {
         snapshot(
-            .custom([], .label([], text: "Label")) { view, label -> Set<Constraint> in
+            .custom([], .label([], text: "Label")) { view, label in
                 [
-                    view.width == 200,
-                    view.height == 50,
-                    label.centerX == view.centerX,
-                    label.centerY == view.centerY,
+                    .equal(view.width, .const(200)),
+                    .equal(view.height, .const(50)),
+                    .equal(label.centerX, .anchor(view.centerX)),
+                    .equal(label.centerY, .anchor(view.centerY)),
                 ]
             }
         )
@@ -252,12 +250,12 @@ final class ViewSnapshotTests: XCTestCase {
 
     func testCustomTopBottomLeadingTrailing() {
         snapshot(
-            .custom([], .label([], text: "Label")) { view, label -> Set<Constraint> in
+            .custom([], .label([], text: "Label")) { view, label in
                 [
-                    label.top == view.top,
-                    label.bottom == view.bottom,
-                    label.leading == view.leading,
-                    label.trailing == view.trailing,
+                    .equal(label.top, .anchor(view.top)),
+                    .equal(label.bottom, .anchor(view.bottom)),
+                    .equal(label.leading, .anchor(view.leading)),
+                    .equal(label.trailing, .anchor(view.trailing)),
                 ]
             }
         )
@@ -265,13 +263,12 @@ final class ViewSnapshotTests: XCTestCase {
 
     func testCustomTopBottomLeadingTrailingOffset() {
         snapshot(
-            .custom([.backgroundColor(.white)], .square()) { view, square -> Set<Constraint> in
-                let a = square.top == view.top + 5
+            .custom([.backgroundColor(.white)], .square()) { view, square in
                 return [
-                    a,
-                    square.bottom == view.bottom - 5,
-                    square.leading == view.leading + 5,
-                    square.trailing == view.trailing - 5,
+                    .equal(square.top, .add(5, .anchor(view.top))),
+                    .equal(square.bottom, .add(-5, .anchor(view.bottom))),
+                    .equal(square.leading, .add(5, .anchor(view.leading))),
+                    .equal(square.trailing, .add(-5, .anchor(view.trailing))),
                 ]
             }
         )
