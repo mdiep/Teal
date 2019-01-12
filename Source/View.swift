@@ -96,15 +96,15 @@ extension UI.View.Custom {
         subviews.forEach(view.addSubview)
 
         let allViews = [view] + subviews
-        for constraint in constraints {
+        for c in constraints {
             NSLayoutConstraint(
-                item: allViews[constraint.first.id.value],
-                attribute: constraint.first.attribute,
-                relatedBy: constraint.relation,
-                toItem: constraint.second.map { allViews[$0.id.value] },
-                attribute: constraint.second.map { $0.attribute } ?? .notAnAttribute,
+                item: allViews[c.first.id.value],
+                attribute: c.first.attribute,
+                relatedBy: c.relation,
+                toItem: c.second.anchor.map { allViews[$0.id.value] },
+                attribute: c.second.anchor?.attribute ?? .notAnAttribute,
                 multiplier: 1,
-                constant: CGFloat(constraint.constant)
+                constant: c.second.offset
             ).isActive = true
         }
 
