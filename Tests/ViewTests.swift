@@ -272,6 +272,16 @@ final class ViewSnapshotTests: XCTestCase {
         )
     }
 
+    func testCustomEdges() {
+        snapshot(
+            .custom([], .label([], text: "Label")) { view, label in
+                [
+                    .equal(label.edges, .anchor(view.edges)),
+                ]
+            }
+        )
+    }
+
     func testCustomTopBottomLeadingTrailingOffset() {
         snapshot(
             .custom([.backgroundColor(.white)], .square()) { view, square in

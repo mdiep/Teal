@@ -58,13 +58,40 @@ extension Target {
 }
 
 public struct AnchorPair<Kind>: Equatable {
-    let anchor1: Anchor<Kind>
-    let anchor2: Anchor<Kind>
+    internal let anchor1: Anchor<Kind>
+    internal let anchor2: Anchor<Kind>
 }
 
 public struct TargetPair<Kind>: Equatable {
-    let target1: Target<Kind>
-    let target2: Target<Kind>
+    internal let target1: Target<Kind>
+    internal let target2: Target<Kind>
+}
+
+public struct EdgeAnchors: Equatable {
+    internal let id: ID
+}
+
+public struct EdgeTargets: Equatable {
+    internal let id: ID
+    internal let insets: UIEdgeInsets
+}
+
+extension EdgeTargets {
+    public static func anchor(_ anchors: EdgeAnchors) -> EdgeTargets {
+        return EdgeTargets(id: anchors.id, insets: .zero)
+    }
+
+    public static func inset(_ insets: UIEdgeInsets, targets: EdgeTargets) -> EdgeTargets {
+        return EdgeTargets(
+            id: targets.id,
+            insets: UIEdgeInsets(
+                top: targets.insets.top - insets.top,
+                left: targets.insets.left - insets.left,
+                bottom: targets.insets.bottom - insets.bottom,
+                right: targets.insets.right - insets.right
+            )
+        )
+    }
 }
 
 extension TargetPair {
@@ -79,10 +106,15 @@ extension TargetPair {
 internal struct Connection: Hashable {
     let anchor: AnyAnchor
     let target: AnyTarget
+
+    fileprivate init(_ anchor: AnyAnchor, _ target: AnyTarget) {
+        self.anchor = anchor
+        self.target = target
+    }
 }
 
 extension Connection {
-    init<Kind>(_ anchor: Anchor<Kind>, _ target: Target<Kind>) {
+    fileprivate init<Kind>(_ anchor: Anchor<Kind>, _ target: Target<Kind>) {
         self.anchor = AnyAnchor(anchor)
         self.target = AnyTarget(target)
     }
@@ -121,6 +153,41 @@ extension Constraint {
             .required, .equal, [
                 Connection(lhs.anchor1, rhs.target1),
                 Connection(lhs.anchor2, rhs.target2),
+            ]
+        )
+    }
+
+    public static func equal(_ lhs: EdgeAnchors, _ rhs: EdgeTargets) -> Constraint {
+        return Constraint(
+            .required, .equal, [
+                Connection(
+                    AnyAnchor(id: lhs.id, attribute: .top),
+                    AnyTarget(
+                        anchor: AnyAnchor(id: rhs.id, attribute: .top),
+                        offset: -rhs.insets.top
+                    )
+                ),
+                Connection(
+                    AnyAnchor(id: lhs.id, attribute: .bottom),
+                    AnyTarget(
+                        anchor: AnyAnchor(id: rhs.id, attribute: .bottom),
+                        offset: -rhs.insets.bottom
+                    )
+                ),
+                Connection(
+                    AnyAnchor(id: lhs.id, attribute: .right),
+                    AnyTarget(
+                        anchor: AnyAnchor(id: rhs.id, attribute: .right),
+                        offset: -rhs.insets.right
+                    )
+                ),
+                Connection(
+                    AnyAnchor(id: lhs.id, attribute: .left),
+                    AnyTarget(
+                        anchor: AnyAnchor(id: rhs.id, attribute: .left),
+                        offset: -rhs.insets.left
+                    )
+                ),
             ]
         )
     }

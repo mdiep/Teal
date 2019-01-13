@@ -52,3 +52,9 @@ extension ID {
         return AnchorPair(anchor1: top, anchor2: bottom)
     }
 }
+
+extension ID {
+    public var edges: EdgeAnchors {
+        return EdgeAnchors(id: self)
+    }
+}
