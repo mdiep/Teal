@@ -29,6 +29,10 @@ extension ID {
     public var trailing: Anchor<Horizontal> {
         return Anchor(id: self, attribute: .trailing)
     }
+
+    public var horizontal: AnchorPair<Horizontal> {
+        return AnchorPair(anchor1: leading, anchor2: trailing)
+    }
 }
 
 extension ID {
@@ -42,5 +46,9 @@ extension ID {
 
     public var bottom: Anchor<Vertical> {
         return Anchor(id: self, attribute: .bottom)
+    }
+
+    public var vertical: AnchorPair<Vertical> {
+        return AnchorPair(anchor1: top, anchor2: bottom)
     }
 }

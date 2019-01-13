@@ -57,6 +57,25 @@ extension Target {
     }
 }
 
+public struct AnchorPair<Kind>: Equatable {
+    let anchor1: Anchor<Kind>
+    let anchor2: Anchor<Kind>
+}
+
+public struct TargetPair<Kind>: Equatable {
+    let target1: Target<Kind>
+    let target2: Target<Kind>
+}
+
+extension TargetPair {
+    public static func anchor(_ anchor: AnchorPair<Kind>) -> TargetPair {
+        return TargetPair(
+            target1: .anchor(anchor.anchor1),
+            target2: .anchor(anchor.anchor2)
+        )
+    }
+}
+
 internal struct Connection: Hashable {
     let anchor: AnyAnchor
     let target: AnyTarget
@@ -92,6 +111,18 @@ extension Constraint {
         _ rhs: Target<Kind>
     ) -> Constraint {
         return Constraint(.required, .equal, [Connection(lhs, rhs)])
+    }
+
+    public static func equal<Kind>(
+        _ lhs: AnchorPair<Kind>,
+        _ rhs: TargetPair<Kind>
+    ) -> Constraint {
+        return Constraint(
+            .required, .equal, [
+                Connection(lhs.anchor1, rhs.target1),
+                Connection(lhs.anchor2, rhs.target2),
+            ]
+        )
     }
 }
 
