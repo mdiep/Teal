@@ -96,16 +96,20 @@ extension UI.View.Custom {
         subviews.forEach(view.addSubview)
 
         let allViews = [view] + subviews
-        for c in constraints {
-            NSLayoutConstraint(
-                item: allViews[c.first.id.value],
-                attribute: c.first.attribute,
-                relatedBy: c.relation,
-                toItem: c.second.anchor.map { allViews[$0.id.value] },
-                attribute: c.second.anchor?.attribute ?? .notAnAttribute,
-                multiplier: 1,
-                constant: c.second.offset
-            ).isActive = true
+        for constraint in constraints {
+            for connection in constraint.connections {
+                let anchor = connection.anchor
+                let target = connection.target
+                NSLayoutConstraint(
+                    item: allViews[anchor.id.value],
+                    attribute: anchor.attribute,
+                    relatedBy: constraint.relation,
+                    toItem: target.anchor.map { allViews[$0.id.value] },
+                    attribute: target.anchor?.attribute ?? .notAnAttribute,
+                    multiplier: 1,
+                    constant: target.offset
+                ).isActive = true
+            }
         }
 
         return view

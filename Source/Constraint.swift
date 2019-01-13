@@ -57,23 +57,32 @@ extension AnchorTarget {
     }
 }
 
+internal struct Connection: Hashable {
+    let anchor: AnyAnchor
+    let target: AnyAnchorTarget
+}
+
+extension Connection {
+    init<Kind>(_ anchor: Anchor<Kind>, _ target: AnchorTarget<Kind>) {
+        self.anchor = AnyAnchor(anchor)
+        self.target = AnyAnchorTarget(target)
+    }
+}
+
 /// A constraint used to design a custom view.
 public struct Constraint: Hashable {
     internal var priority: UILayoutPriority
     internal let relation: NSLayoutConstraint.Relation
-    internal let first: AnyAnchor
-    internal let second: AnyAnchorTarget
+    internal let connections: [Connection]
 
-    fileprivate init<Kind>(
+    fileprivate init(
         _ priority: UILayoutPriority,
         _ relation: NSLayoutConstraint.Relation,
-        _ first: Anchor<Kind>,
-        _ second: AnchorTarget<Kind>
+        _ connections: [Connection]
     ) {
         self.priority = priority
         self.relation = relation
-        self.first = AnyAnchor(first)
-        self.second = AnyAnchorTarget(second)
+        self.connections = connections
     }
 }
 
@@ -82,7 +91,7 @@ extension Constraint {
         _ lhs: Anchor<Kind>,
         _ rhs: AnchorTarget<Kind>
     ) -> Constraint {
-        return Constraint(.required, .equal, lhs, rhs)
+        return Constraint(.required, .equal, [Connection(lhs, rhs)])
     }
 }
 
