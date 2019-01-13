@@ -17,68 +17,190 @@ extension AnyAnchor {
 }
 
 public enum Size {}
+public enum Center {}
 public enum Horizontal {}
 public enum Vertical {}
 
 /// A target that an anchor can be constrained to.
-public struct AnchorTarget<Kind>: Equatable {
+public struct Target<Kind>: Equatable {
     internal let anchor: Anchor<Kind>?
     internal var offset: CGFloat
 }
 
-internal struct AnyAnchorTarget: Hashable {
+internal struct AnyTarget: Hashable {
     internal let anchor: AnyAnchor?
     internal let offset: CGFloat
 }
 
-extension AnyAnchorTarget {
-    init<Kind>(_ target: AnchorTarget<Kind>) {
+extension AnyTarget {
+    init<Kind>(_ target: Target<Kind>) {
         anchor = target.anchor.map(AnyAnchor.init)
         offset = target.offset
     }
 }
 
-extension AnchorTarget {
-    public static func anchor(_ anchor: Anchor<Kind>) -> AnchorTarget {
-        return AnchorTarget(anchor: anchor, offset: 0)
+extension Target {
+    public static func anchor(_ anchor: Anchor<Kind>) -> Target {
+        return Target(anchor: anchor, offset: 0)
     }
 
-    public static func const(_ offset: CGFloat) -> AnchorTarget {
-        return AnchorTarget(anchor: nil, offset: offset)
+    public static func const(_ offset: CGFloat) -> Target {
+        return Target(anchor: nil, offset: offset)
     }
 
     public static func add(
         _ offset: CGFloat,
-        _ target: AnchorTarget<Kind>
-    ) -> AnchorTarget {
+        _ target: Target<Kind>
+    ) -> Target {
         var result = target
         result.offset += offset
         return result
     }
 }
 
+public struct AnchorPair<Kind>: Equatable {
+    internal let anchor1: AnyAnchor
+    internal let anchor2: AnyAnchor
+}
+
+public struct TargetPair<Kind>: Equatable {
+    internal let target1: AnyTarget
+    internal let target2: AnyTarget
+}
+
+public struct EdgeAnchors: Equatable {
+    internal let id: ID
+}
+
+public struct EdgeTargets: Equatable {
+    internal let id: ID
+    internal let insets: UIEdgeInsets
+}
+
+extension EdgeTargets {
+    public static func anchor(_ anchors: EdgeAnchors) -> EdgeTargets {
+        return EdgeTargets(id: anchors.id, insets: .zero)
+    }
+
+    public static func inset(_ insets: UIEdgeInsets, targets: EdgeTargets) -> EdgeTargets {
+        return EdgeTargets(
+            id: targets.id,
+            insets: UIEdgeInsets(
+                top: targets.insets.top - insets.top,
+                left: targets.insets.left - insets.left,
+                bottom: targets.insets.bottom - insets.bottom,
+                right: targets.insets.right - insets.right
+            )
+        )
+    }
+}
+
+extension TargetPair {
+    public static func anchor(_ anchor: AnchorPair<Kind>) -> TargetPair {
+        return TargetPair(
+            target1: AnyTarget(anchor: anchor.anchor1, offset: 0),
+            target2: AnyTarget(anchor: anchor.anchor2, offset: 0)
+        )
+    }
+}
+
+internal struct Connection: Hashable {
+    let anchor: AnyAnchor
+    let target: AnyTarget
+
+    fileprivate init(_ anchor: AnyAnchor, _ target: AnyTarget) {
+        self.anchor = anchor
+        self.target = target
+    }
+}
+
+extension Connection {
+    fileprivate init<Kind>(_ anchor: Anchor<Kind>, _ target: Target<Kind>) {
+        self.anchor = AnyAnchor(anchor)
+        self.target = AnyTarget(target)
+    }
+}
+
 /// A constraint used to design a custom view.
 public struct Constraint: Hashable {
-    internal let first: AnyAnchor
+    internal var priority: UILayoutPriority
     internal let relation: NSLayoutConstraint.Relation
-    internal let second: AnyAnchorTarget
+    internal let connections: [Connection]
 
-    fileprivate init<Kind>(
-        _ first: Anchor<Kind>,
+    fileprivate init(
+        _ priority: UILayoutPriority,
         _ relation: NSLayoutConstraint.Relation,
-        _ second: AnchorTarget<Kind>
+        _ connections: [Connection]
     ) {
-        self.first = AnyAnchor(first)
+        self.priority = priority
         self.relation = relation
-        self.second = AnyAnchorTarget(second)
+        self.connections = connections
     }
 }
 
 extension Constraint {
     public static func equal<Kind>(
         _ lhs: Anchor<Kind>,
-        _ rhs: AnchorTarget<Kind>
+        _ rhs: Target<Kind>
     ) -> Constraint {
-        return Constraint(lhs, .equal, rhs)
+        return Constraint(.required, .equal, [Connection(lhs, rhs)])
+    }
+
+    public static func equal<Kind>(
+        _ lhs: AnchorPair<Kind>,
+        _ rhs: TargetPair<Kind>
+    ) -> Constraint {
+        return Constraint(
+            .required, .equal, [
+                Connection(lhs.anchor1, rhs.target1),
+                Connection(lhs.anchor2, rhs.target2),
+            ]
+        )
+    }
+
+    public static func equal(_ lhs: EdgeAnchors, _ rhs: EdgeTargets) -> Constraint {
+        return Constraint(
+            .required, .equal, [
+                Connection(
+                    AnyAnchor(id: lhs.id, attribute: .top),
+                    AnyTarget(
+                        anchor: AnyAnchor(id: rhs.id, attribute: .top),
+                        offset: -rhs.insets.top
+                    )
+                ),
+                Connection(
+                    AnyAnchor(id: lhs.id, attribute: .bottom),
+                    AnyTarget(
+                        anchor: AnyAnchor(id: rhs.id, attribute: .bottom),
+                        offset: -rhs.insets.bottom
+                    )
+                ),
+                Connection(
+                    AnyAnchor(id: lhs.id, attribute: .right),
+                    AnyTarget(
+                        anchor: AnyAnchor(id: rhs.id, attribute: .right),
+                        offset: -rhs.insets.right
+                    )
+                ),
+                Connection(
+                    AnyAnchor(id: lhs.id, attribute: .left),
+                    AnyTarget(
+                        anchor: AnyAnchor(id: rhs.id, attribute: .left),
+                        offset: -rhs.insets.left
+                    )
+                ),
+            ]
+        )
+    }
+}
+
+extension Constraint {
+    public static func priority(
+        _ priority: UILayoutPriority,
+        _ constraint: Constraint
+    ) -> Constraint {
+        var result = constraint
+        result.priority = priority
+        return result
     }
 }
