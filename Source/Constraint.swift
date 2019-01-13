@@ -21,36 +21,36 @@ public enum Horizontal {}
 public enum Vertical {}
 
 /// A target that an anchor can be constrained to.
-public struct AnchorTarget<Kind>: Equatable {
+public struct Target<Kind>: Equatable {
     internal let anchor: Anchor<Kind>?
     internal var offset: CGFloat
 }
 
-internal struct AnyAnchorTarget: Hashable {
+internal struct AnyTarget: Hashable {
     internal let anchor: AnyAnchor?
     internal let offset: CGFloat
 }
 
-extension AnyAnchorTarget {
-    init<Kind>(_ target: AnchorTarget<Kind>) {
+extension AnyTarget {
+    init<Kind>(_ target: Target<Kind>) {
         anchor = target.anchor.map(AnyAnchor.init)
         offset = target.offset
     }
 }
 
-extension AnchorTarget {
-    public static func anchor(_ anchor: Anchor<Kind>) -> AnchorTarget {
-        return AnchorTarget(anchor: anchor, offset: 0)
+extension Target {
+    public static func anchor(_ anchor: Anchor<Kind>) -> Target {
+        return Target(anchor: anchor, offset: 0)
     }
 
-    public static func const(_ offset: CGFloat) -> AnchorTarget {
-        return AnchorTarget(anchor: nil, offset: offset)
+    public static func const(_ offset: CGFloat) -> Target {
+        return Target(anchor: nil, offset: offset)
     }
 
     public static func add(
         _ offset: CGFloat,
-        _ target: AnchorTarget<Kind>
-    ) -> AnchorTarget {
+        _ target: Target<Kind>
+    ) -> Target {
         var result = target
         result.offset += offset
         return result
@@ -59,13 +59,13 @@ extension AnchorTarget {
 
 internal struct Connection: Hashable {
     let anchor: AnyAnchor
-    let target: AnyAnchorTarget
+    let target: AnyTarget
 }
 
 extension Connection {
-    init<Kind>(_ anchor: Anchor<Kind>, _ target: AnchorTarget<Kind>) {
+    init<Kind>(_ anchor: Anchor<Kind>, _ target: Target<Kind>) {
         self.anchor = AnyAnchor(anchor)
-        self.target = AnyAnchorTarget(target)
+        self.target = AnyTarget(target)
     }
 }
 
@@ -89,7 +89,7 @@ public struct Constraint: Hashable {
 extension Constraint {
     public static func equal<Kind>(
         _ lhs: Anchor<Kind>,
-        _ rhs: AnchorTarget<Kind>
+        _ rhs: Target<Kind>
     ) -> Constraint {
         return Constraint(.required, .equal, [Connection(lhs, rhs)])
     }
