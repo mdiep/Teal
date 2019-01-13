@@ -1,7 +1,7 @@
 @testable import Teal
 import XCTest
 
-final class TargetTests: XCTestCase {
+final class TrampolineTests: XCTestCase {
     func testUIControlSetBlockForEvent() {
         var done = false
         let button = UIButton()
