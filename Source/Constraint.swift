@@ -59,17 +59,20 @@ extension AnchorTarget {
 
 /// A constraint used to design a custom view.
 public struct Constraint: Hashable {
-    internal let first: AnyAnchor
+    internal var priority: UILayoutPriority
     internal let relation: NSLayoutConstraint.Relation
+    internal let first: AnyAnchor
     internal let second: AnyAnchorTarget
 
     fileprivate init<Kind>(
-        _ first: Anchor<Kind>,
+        _ priority: UILayoutPriority,
         _ relation: NSLayoutConstraint.Relation,
+        _ first: Anchor<Kind>,
         _ second: AnchorTarget<Kind>
     ) {
-        self.first = AnyAnchor(first)
+        self.priority = priority
         self.relation = relation
+        self.first = AnyAnchor(first)
         self.second = AnyAnchorTarget(second)
     }
 }
@@ -79,6 +82,17 @@ extension Constraint {
         _ lhs: Anchor<Kind>,
         _ rhs: AnchorTarget<Kind>
     ) -> Constraint {
-        return Constraint(lhs, .equal, rhs)
+        return Constraint(.required, .equal, lhs, rhs)
+    }
+}
+
+extension Constraint {
+    public static func priority(
+        _ priority: UILayoutPriority,
+        _ constraint: Constraint
+    ) -> Constraint {
+        var result = constraint
+        result.priority = priority
+        return result
     }
 }
