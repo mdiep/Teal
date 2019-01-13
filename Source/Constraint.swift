@@ -17,6 +17,7 @@ extension AnyAnchor {
 }
 
 public enum Size {}
+public enum Center {}
 public enum Horizontal {}
 public enum Vertical {}
 
@@ -58,13 +59,13 @@ extension Target {
 }
 
 public struct AnchorPair<Kind>: Equatable {
-    internal let anchor1: Anchor<Kind>
-    internal let anchor2: Anchor<Kind>
+    internal let anchor1: AnyAnchor
+    internal let anchor2: AnyAnchor
 }
 
 public struct TargetPair<Kind>: Equatable {
-    internal let target1: Target<Kind>
-    internal let target2: Target<Kind>
+    internal let target1: AnyTarget
+    internal let target2: AnyTarget
 }
 
 public struct EdgeAnchors: Equatable {
@@ -97,8 +98,8 @@ extension EdgeTargets {
 extension TargetPair {
     public static func anchor(_ anchor: AnchorPair<Kind>) -> TargetPair {
         return TargetPair(
-            target1: .anchor(anchor.anchor1),
-            target2: .anchor(anchor.anchor2)
+            target1: AnyTarget(anchor: anchor.anchor1, offset: 0),
+            target2: AnyTarget(anchor: anchor.anchor2, offset: 0)
         )
     }
 }

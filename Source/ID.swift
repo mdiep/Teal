@@ -8,6 +8,12 @@ public struct ID: Hashable {
 }
 
 extension ID {
+    public var center: AnchorPair<Center> {
+        return AnchorPair(anchor1: AnyAnchor(centerX), anchor2: AnyAnchor(centerY))
+    }
+}
+
+extension ID {
     public var height: Anchor<Size> {
         return Anchor(id: self, attribute: .height)
     }
@@ -31,7 +37,7 @@ extension ID {
     }
 
     public var horizontal: AnchorPair<Horizontal> {
-        return AnchorPair(anchor1: leading, anchor2: trailing)
+        return AnchorPair(anchor1: AnyAnchor(leading), anchor2: AnyAnchor(trailing))
     }
 }
 
@@ -49,7 +55,7 @@ extension ID {
     }
 
     public var vertical: AnchorPair<Vertical> {
-        return AnchorPair(anchor1: top, anchor2: bottom)
+        return AnchorPair(anchor1: AnyAnchor(top), anchor2: AnyAnchor(bottom))
     }
 }
 
