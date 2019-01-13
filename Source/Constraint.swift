@@ -23,7 +23,7 @@ public enum YAxis {}
 /// A target that an anchor can be constrained to.
 public struct AnchorTarget<Kind>: Equatable {
     internal let anchor: Anchor<Kind>?
-    internal let offset: CGFloat
+    internal var offset: CGFloat
 }
 
 internal struct AnyAnchorTarget: Hashable {
@@ -38,12 +38,23 @@ extension AnyAnchorTarget {
     }
 }
 
-public func + <Kind>(lhs: Anchor<Kind>, rhs: CGFloat) -> AnchorTarget<Kind> {
-    return AnchorTarget(anchor: lhs, offset: rhs)
-}
+extension AnchorTarget {
+    public static func anchor(_ anchor: Anchor<Kind>) -> AnchorTarget {
+        return AnchorTarget(anchor: anchor, offset: 0)
+    }
 
-public func - <Kind>(lhs: Anchor<Kind>, rhs: CGFloat) -> AnchorTarget<Kind> {
-    return AnchorTarget(anchor: lhs, offset: -rhs)
+    public static func const(_ offset: CGFloat) -> AnchorTarget {
+        return AnchorTarget(anchor: nil, offset: offset)
+    }
+
+    public static func add(
+        _ offset: CGFloat,
+        _ target: AnchorTarget<Kind>
+    ) -> AnchorTarget {
+        var result = target
+        result.offset += offset
+        return result
+    }
 }
 
 /// A constraint used to design a custom view.
@@ -63,14 +74,11 @@ public struct Constraint: Hashable {
     }
 }
 
-public func == <Kind>(lhs: Anchor<Kind>, rhs: Anchor<Kind>) -> Constraint {
-    return lhs == AnchorTarget(anchor: rhs, offset: 0)
-}
-
-public func == <Kind>(lhs: Anchor<Kind>, rhs: CGFloat) -> Constraint {
-    return lhs == AnchorTarget(anchor: nil, offset: rhs)
-}
-
-public func == <Kind>(lhs: Anchor<Kind>, rhs: AnchorTarget<Kind>) -> Constraint {
-    return Constraint(lhs, .equal, rhs)
+extension Constraint {
+    public static func equal<Kind>(
+        _ lhs: Anchor<Kind>,
+        _ rhs: AnchorTarget<Kind>
+    ) -> Constraint {
+        return Constraint(lhs, .equal, rhs)
+    }
 }
