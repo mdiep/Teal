@@ -8,39 +8,39 @@ public struct ID: Hashable {
 }
 
 extension ID {
-    public var height: Anchor<Dimension> {
+    public var height: Anchor<Size> {
         return Anchor(id: self, attribute: .height)
     }
 
-    public var width: Anchor<Dimension> {
+    public var width: Anchor<Size> {
         return Anchor(id: self, attribute: .width)
     }
 }
 
 extension ID {
-    public var centerX: Anchor<XAxis> {
+    public var centerX: Anchor<Horizontal> {
         return Anchor(id: self, attribute: .centerX)
     }
 
-    public var leading: Anchor<XAxis> {
+    public var leading: Anchor<Horizontal> {
         return Anchor(id: self, attribute: .leading)
     }
 
-    public var trailing: Anchor<XAxis> {
+    public var trailing: Anchor<Horizontal> {
         return Anchor(id: self, attribute: .trailing)
     }
 }
 
 extension ID {
-    public var centerY: Anchor<YAxis> {
+    public var centerY: Anchor<Vertical> {
         return Anchor(id: self, attribute: .centerY)
     }
 
-    public var top: Anchor<YAxis> {
+    public var top: Anchor<Vertical> {
         return Anchor(id: self, attribute: .top)
     }
 
-    public var bottom: Anchor<YAxis> {
+    public var bottom: Anchor<Vertical> {
         return Anchor(id: self, attribute: .bottom)
     }
 }

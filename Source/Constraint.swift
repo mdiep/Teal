@@ -16,9 +16,9 @@ extension AnyAnchor {
     }
 }
 
-public enum Dimension {}
-public enum XAxis {}
-public enum YAxis {}
+public enum Size {}
+public enum Horizontal {}
+public enum Vertical {}
 
 /// A target that an anchor can be constrained to.
 public struct AnchorTarget<Kind>: Equatable {
