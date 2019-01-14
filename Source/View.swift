@@ -72,7 +72,7 @@ extension UI {
         case let .textField(textField):
             view = textField.makeUIView()
         }
-        attributes.forEach { $0.apply(to: view, perform) }
+        properties.forEach { $0.apply(to: view, perform) }
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }
