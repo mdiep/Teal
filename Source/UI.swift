@@ -1,10 +1,10 @@
 /// An element in a user interface.
 public struct UI<Message: Equatable>: Equatable {
-    internal let attributes: [Attribute<Message>]
+    internal let properties: [Property<Message>]
     internal let view: View
 
-    internal init(_ attributes: [Attribute<Message>], _ view: View) {
-        self.attributes = attributes
+    internal init(_ properties: [Property<Message>], _ view: View) {
+        self.properties = properties
         self.view = view
     }
 }
@@ -15,9 +15,9 @@ public enum Axis: Equatable {
 }
 
 extension UI {
-    public static func button(_ attributes: [Attribute<Message>], title: String) -> UI {
+    public static func button(_ properties: [Property<Message>], title: String) -> UI {
         return UI(
-            attributes,
+            properties,
             .button(.init(title: title))
         )
     }
@@ -25,11 +25,11 @@ extension UI {
 
 extension UI {
     public static func custom(
-        _ attributes: [Attribute<Message>],
+        _ properties: [Property<Message>],
         _ constraints: (ID) -> Set<Constraint>
     ) -> UI {
         return UI(
-            attributes,
+            properties,
             .custom(
                 .init(
                     constraints: constraints(ID(0)),
@@ -40,12 +40,12 @@ extension UI {
     }
 
     public static func custom(
-        _ attributes: [Attribute<Message>],
+        _ properties: [Property<Message>],
         _ a: UI,
         _ constraints: (ID, ID) -> Set<Constraint>
     ) -> UI {
         return UI(
-            attributes,
+            properties,
             .custom(
                 .init(
                     constraints: constraints(ID(0), ID(1)),
@@ -56,13 +56,13 @@ extension UI {
     }
 
     public static func custom(
-        _ attributes: [Attribute<Message>],
+        _ properties: [Property<Message>],
         _ a: UI,
         _ b: UI,
         _ constraints: (ID, ID, ID) -> Set<Constraint>
     ) -> UI {
         return UI(
-            attributes,
+            properties,
             .custom(
                 .init(
                     constraints: constraints(ID(0), ID(1), ID(2)),
@@ -73,14 +73,14 @@ extension UI {
     }
 
     public static func custom(
-        _ attributes: [Attribute<Message>],
+        _ properties: [Property<Message>],
         _ a: UI,
         _ b: UI,
         _ c: UI,
         _ constraints: (ID, ID, ID, ID) -> Set<Constraint>
     ) -> UI {
         return UI(
-            attributes,
+            properties,
             .custom(
                 .init(
                     constraints: constraints(ID(0), ID(1), ID(2), ID(3)),
@@ -92,7 +92,7 @@ extension UI {
 
     // swiftlint:disable:next function_parameter_count
     public static func custom(
-        _ attributes: [Attribute<Message>],
+        _ properties: [Property<Message>],
         _ a: UI,
         _ b: UI,
         _ c: UI,
@@ -100,7 +100,7 @@ extension UI {
         _ constraints: (ID, ID, ID, ID, ID) -> Set<Constraint>
     ) -> UI {
         return UI(
-            attributes,
+            properties,
             .custom(
                 .init(
                     constraints: constraints(ID(0), ID(1), ID(2), ID(3), ID(4)),
@@ -112,7 +112,7 @@ extension UI {
 
     // swiftlint:disable:next function_parameter_count
     public static func custom(
-        _ attributes: [Attribute<Message>],
+        _ properties: [Property<Message>],
         _ a: UI,
         _ b: UI,
         _ c: UI,
@@ -121,7 +121,7 @@ extension UI {
         _ constraints: (ID, ID, ID, ID, ID, ID) -> Set<Constraint>
     ) -> UI {
         return UI(
-            attributes,
+            properties,
             .custom(
                 .init(
                     constraints: constraints(ID(0), ID(1), ID(2), ID(3), ID(4), ID(5)),
@@ -134,11 +134,11 @@ extension UI {
 
 extension UI {
     public static func image(
-        _ attributes: [Attribute<Message>],
+        _ properties: [Property<Message>],
         _ image: UIImage
     ) -> UI {
         return UI(
-            attributes,
+            properties,
             .image(
                 .init(
                     image: image
@@ -150,7 +150,7 @@ extension UI {
 
 extension UI {
     public static func label(
-        _ attributes: [Attribute<Message>],
+        _ properties: [Property<Message>],
         numberOfLines: Int = 1,
         text: String,
         textAlignment: NSTextAlignment = .natural,
@@ -158,7 +158,7 @@ extension UI {
         font: UIFont? = nil
     ) -> UI {
         return UI(
-            attributes,
+            properties,
             .label(
                 .init(
                     numberOfLines: numberOfLines,
@@ -174,12 +174,12 @@ extension UI {
 
 extension UI {
     public static func stack(
-        _ attributes: [Attribute<Message>],
+        _ properties: [Property<Message>],
         _ elements: [UI],
         axis: Axis
     ) -> UI {
         return UI(
-            attributes,
+            properties,
             .stack(.init(views: elements, axis: axis))
         )
     }
@@ -187,10 +187,10 @@ extension UI {
 
 extension UI {
     public static func textField(
-        _ attributes: [Attribute<Message>],
+        _ properties: [Property<Message>],
         placeholder: String = "",
         text: String = ""
     ) -> UI {
-        return UI(attributes, .textField(.init(placeholder: placeholder, text: text)))
+        return UI(properties, .textField(.init(placeholder: placeholder, text: text)))
     }
 }

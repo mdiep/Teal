@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Attribute<Message: Equatable>: Equatable {
+public struct Property<Message: Equatable>: Equatable {
     enum Kind: Equatable {
         case accessibilityIdentifier(String)
         case backgroundColor(UIColor)
@@ -14,21 +14,21 @@ public struct Attribute<Message: Equatable>: Equatable {
     }
 }
 
-extension Attribute {
-    public static func accessibilityIdentifier(_ string: String) -> Attribute {
-        return Attribute(.accessibilityIdentifier(string))
+extension Property {
+    public static func accessibilityIdentifier(_ string: String) -> Property {
+        return Property(.accessibilityIdentifier(string))
     }
 
-    public static func backgroundColor(_ color: UIColor) -> Attribute {
-        return Attribute(.backgroundColor(color))
+    public static func backgroundColor(_ color: UIColor) -> Property {
+        return Property(.backgroundColor(color))
     }
 
-    public static func onTouchUpInside(_ message: Message) -> Attribute {
-        return Attribute(.on(.touchUpInside, message))
+    public static func onTouchUpInside(_ message: Message) -> Property {
+        return Property(.on(.touchUpInside, message))
     }
 }
 
-extension Attribute {
+extension Property {
     func apply(to view: UIControl, _ perform: @escaping (Message) -> Void) {
         switch kind {
         case let .accessibilityIdentifier(identifier):
