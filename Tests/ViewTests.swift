@@ -18,6 +18,10 @@ final class ViewPerformTests: XCTestCase {
 }
 
 final class ViewPropertyTests: XCTestCase {
+    private func makeCustom(_ properties: [Teal.Property<Message>]) -> UIView {
+        return makeView(UI.custom(properties) { _ in [] })
+    }
+
     private func makeView<View: UIView>(_ ui: UI<Message>) -> View {
         let view = Teal.View(ui) { _ in }
         return view.subviews[0] as! View // swiftlint:disable:this force_cast
@@ -31,6 +35,34 @@ final class ViewPropertyTests: XCTestCase {
         view.ui = .label([], text: "Foo")
 
         XCTAssertNil(view.subviews[0].accessibilityIdentifier)
+    }
+
+    // MARK: - .contentCompressionResistancePriority
+
+    func testContentCompressionResistancePriorityHorizontal() {
+        let priority = UILayoutPriority(rawValue: 1)
+        let view = makeCustom([.contentCompressionResistancePriority(.horizontal, priority)])
+        XCTAssertEqual(view.contentCompressionResistancePriority(for: .horizontal), priority)
+    }
+
+    func testContentCompressionResistancePriorityVertical() {
+        let priority = UILayoutPriority(rawValue: 1)
+        let view = makeCustom([.contentCompressionResistancePriority(.vertical, priority)])
+        XCTAssertEqual(view.contentCompressionResistancePriority(for: .vertical), priority)
+    }
+
+    // MARK: - .contentHuggingPriority
+
+    func testContentHuggingPriorityHorizontal() {
+        let priority = UILayoutPriority(rawValue: 1)
+        let view = makeCustom([.contentHuggingPriority(.horizontal, priority)])
+        XCTAssertEqual(view.contentHuggingPriority(for: .horizontal), priority)
+    }
+
+    func testContentHuggingPriorityVertical() {
+        let priority = UILayoutPriority(rawValue: 1)
+        let view = makeCustom([.contentHuggingPriority(.vertical, priority)])
+        XCTAssertEqual(view.contentHuggingPriority(for: .vertical), priority)
     }
 
     // MARK: - .textField
