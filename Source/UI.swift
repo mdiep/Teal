@@ -175,12 +175,12 @@ extension UI {
 extension UI {
     public static func stack(
         _ properties: [Property<Message>],
-        _ elements: [UI],
-        axis: Axis
+        _ stackProperties: [StackProperty],
+        _ elements: [UI]
     ) -> UI {
         return UI(
             properties,
-            .stack(.init(views: elements, axis: axis))
+            .stack(.init(properties: stackProperties, views: elements))
         )
     }
 }

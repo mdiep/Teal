@@ -16,11 +16,11 @@ extension AppDelegate: UIApplicationDelegate {
             render: { _ in
                 return .stack(
                     [],
+                    [ .axis(.vertical) ],
                     [
                         .label([], text: "Go"),
                         .button([.onTouchUpInside(0)], title: "Go"),
-                    ],
-                    axis: .vertical
+                    ]
                 )
             }, update: { _, message in
                 print("\(message)")

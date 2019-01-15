@@ -41,8 +41,8 @@ extension UI.View {
 
 extension UI.View {
     struct Stack: Equatable {
+        let properties: [StackProperty]
         let views: [UI]
-        let axis: Axis
     }
 }
 

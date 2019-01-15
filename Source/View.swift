@@ -151,7 +151,7 @@ extension UI.View.Stack {
     ) -> UIControl {
         let views = self.views.map { $0.makeUIView(perform) }
         let stack = UIStackView(arrangedSubviews: views)
-        stack.axis = axis == .vertical ? .vertical : .horizontal
+        properties.forEach { $0.apply(to: stack) }
 
         let control = UIControl()
         control.addSubview(stack)
