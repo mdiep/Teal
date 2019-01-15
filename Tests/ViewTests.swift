@@ -65,6 +65,28 @@ final class ViewPropertyTests: XCTestCase {
         XCTAssertEqual(view.contentHuggingPriority(for: .vertical), priority)
     }
 
+    // MARK: - Stack
+
+    func makeStack(_ properties: [StackProperty]) -> UIStackView {
+        let view: UIView = makeView(.stack([], properties, []))
+        return view.subviews[0] as! UIStackView // swiftlint:disable:this force_cast
+    }
+
+    func testStackAlignment() {
+        let stack = makeStack([.alignment(.center)])
+        XCTAssertEqual(stack.alignment, .center)
+    }
+
+    func testStackAxis() {
+        let stack = makeStack([.axis(.vertical)])
+        XCTAssertEqual(stack.axis, .vertical)
+    }
+
+    func testStackSpacing() {
+        let stack = makeStack([.spacing(4)])
+        XCTAssertEqual(stack.spacing, 4)
+    }
+
     // MARK: - .textField
 
     func testTextFieldPlaceholder() {
@@ -389,8 +411,8 @@ final class ViewSnapshotTests: XCTestCase {
         snapshot(
             UI.stack(
                 [],
-                [.label([], text: "First"), .label([], text: "Second")],
-                axis: .horizontal
+                [.axis(.horizontal)],
+                [.label([], text: "First"), .label([], text: "Second")]
             )
         )
     }
@@ -399,8 +421,8 @@ final class ViewSnapshotTests: XCTestCase {
         let label1: UI<Message> = .label([], text: "First")
         let label2: UI<Message> = .label([], text: "Second")
         snapshot(
-            UI.stack([], [label1, label2], axis: .horizontal),
-            UI.stack([], [label1, label2], axis: .vertical)
+            UI.stack([], [.axis(.horizontal)], [label1, label2]),
+            UI.stack([], [.axis(.vertical)], [label1, label2])
         )
     }
 
@@ -408,8 +430,8 @@ final class ViewSnapshotTests: XCTestCase {
         snapshot(
             UI.stack(
                 [],
-                [.label([], text: "First"), .label([], text: "Second")],
-                axis: .vertical
+                [.axis(.vertical)],
+                [.label([], text: "First"), .label([], text: "Second")]
             )
         )
     }

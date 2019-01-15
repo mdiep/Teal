@@ -64,3 +64,46 @@ extension Property {
         }
     }
 }
+
+public struct StackProperty: Equatable {
+    enum Kind: Equatable {
+        case alignment(UIStackView.Alignment)
+        case axis(Axis)
+        case spacing(CGFloat)
+    }
+
+    let kind: Kind
+
+    init(_ kind: Kind) {
+        self.kind = kind
+    }
+}
+
+extension StackProperty {
+    public static func alignment(_ a: UIStackView.Alignment) -> StackProperty {
+        return StackProperty(.alignment(a))
+    }
+
+    public static func axis(_ a: Axis) -> StackProperty {
+        return StackProperty(.axis(a))
+    }
+
+    public static func spacing(_ f: CGFloat) -> StackProperty {
+        return StackProperty(.spacing(f))
+    }
+}
+
+extension StackProperty {
+    func apply(to view: UIStackView) {
+        switch kind {
+        case let .alignment(a):
+            view.alignment = a
+
+        case let .axis(a):
+            view.axis = a == .vertical ? .vertical : .horizontal
+
+        case let .spacing(f):
+            view.spacing = f
+        }
+    }
+}
